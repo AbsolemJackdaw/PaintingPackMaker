@@ -1,4 +1,4 @@
-package jackdaw.paintingpack.paintingpacktool;
+package jackdaw.paintingpack.paintingpacktool.util;
 
 import javafx.scene.Scene;
 

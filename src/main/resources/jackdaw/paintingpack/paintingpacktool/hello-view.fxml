@@ -5,7 +5,7 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
 
-<VBox alignment="CENTER" minWidth="400.0" onMouseEntered="#hoverOver" style="-fx-background-color: #c6c6c6; -fx-border-color: white; -fx-border-width: 4;" xmlns="http://javafx.com/javafx/11.0.14-internal" xmlns:fx="http://javafx.com/fxml/1" fx:controller="jackdaw.paintingpack.paintingpacktool.HelloController">
+<VBox alignment="CENTER" minWidth="400.0" onMouseEntered="#hoverOver" style="-fx-background-color: #c6c6c6; -fx-border-color: white; -fx-border-width: 4;" xmlns="http://javafx.com/javafx/11.0.14-internal" xmlns:fx="http://javafx.com/fxml/1" fx:controller="jackdaw.paintingpack.paintingpacktool.mav.Controller">
     <padding>
         <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
     </padding>

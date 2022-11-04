@@ -1,5 +1,6 @@
-package jackdaw.paintingpack.paintingpacktool;
+package jackdaw.paintingpack.paintingpacktool.mav;
 
+import jackdaw.paintingpack.paintingpacktool.util.PaintingSize;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.*;
@@ -14,20 +15,20 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-public class ImageEntry {
+public class PaintingCard {
     static final Font font = new Font("System Bold", 14.0);
     final String imageName;
     final String absoluteImagePath;
     final boolean isErrored;
     final HBox generalContainer = new HBox();
+    final StackPane leftPane = new StackPane();
+    final VBox rightPane = new VBox();
     final HBox rightPaneTop = new HBox();
     final HBox rightPaneBottom = new HBox();
     final VBox customSizeContainer = new VBox();
-    final VBox rightPane = new VBox();
     final ToggleGroup group = new ToggleGroup();
-    final StackPane leftPane = new StackPane();
     private final List<TextField> prompts = new ArrayList<>();
-    private final HelloController controller;
+    private final Controller controller;
     private int ID = 0;
 
     {
@@ -38,7 +39,7 @@ public class ImageEntry {
 
     }
 
-    public ImageEntry(HelloController controller, Image img, String imageName, String absoluteImagePath, boolean isErrored) {
+    public PaintingCard(Controller controller, Image img, String imageName, String absoluteImagePath, boolean isErrored) {
         this.isErrored = isErrored;
         this.imageName = imageName;
         this.absoluteImagePath = absoluteImagePath;

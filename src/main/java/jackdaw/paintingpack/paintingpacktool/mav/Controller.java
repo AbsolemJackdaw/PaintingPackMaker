@@ -1,5 +1,10 @@
-package jackdaw.paintingpack.paintingpacktool;
+package jackdaw.paintingpack.paintingpacktool.mav;
 
+import jackdaw.paintingpack.paintingpacktool.PaintingPackMakerApp;
+import jackdaw.paintingpack.paintingpacktool.export.PackExporter;
+import jackdaw.paintingpack.paintingpacktool.util.PaintingEntry;
+import jackdaw.paintingpack.paintingpacktool.util.PaintingSize;
+import jackdaw.paintingpack.paintingpacktool.util.SizeListener;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.Node;
@@ -24,19 +29,19 @@ import java.util.List;
 import java.util.Locale;
 import java.util.regex.Pattern;
 
-public class HelloController {
+public class Controller {
 
-    private static final Pair NONE = new Pair(0, 0);
-    private static String modid = "";
+    private static final Pair<Integer, Integer> NONE = new Pair(0, 0);
     final FileChooser fileChooser = new FileChooser();
-    private final List<ImageEntry> paintingCandidates = new ArrayList<>();
+    private final List<PaintingCard> paintingCandidates = new ArrayList<>();
+    private String modID = "";
     private AnchorPane paintingContainer;
 
-    public static String getModid(String append) {
-        return HelloController.modid.isEmpty() ? "" : HelloController.modid + append;
+    public String getModid(String append) {
+        return modID.isEmpty() ? "" : modID + append;
     }
 
-    //hacky way of initializing the window util i find a better way
+    //hacky way of initializing the window until I find a better way
     @FXML
     protected void hoverOver(MouseEvent event) {
         if (paintingContainer == null) {
@@ -54,7 +59,7 @@ public class HelloController {
                         var sw = scene.getWidth() - 40;
                         pane.minWidthProperty().set(sw);
                     };
-                    HelloApplication.resizeListeners.add(evt);
+                    PaintingPackMakerApp.resizeListeners.add(evt);
                 }
             }
         }
@@ -71,7 +76,7 @@ public class HelloController {
                 try (FileInputStream fis = new FileInputStream(file)) {
                     Image img = new Image(fis);
                     var regex = Pattern.compile("^([a-z\\d._/]*)(.png)$");
-                    var collection = new ImageEntry(this, img, file.getName(), file.getAbsolutePath(), !file.getName().matches(regex.pattern()));
+                    var collection = new PaintingCard(this, img, file.getName(), file.getAbsolutePath(), !file.getName().matches(regex.pattern()));
                     collection.addCollectionTo(paintingContainer);
                     paintingCandidates.add(collection);
                 } catch (IOException e) {
@@ -86,9 +91,9 @@ public class HelloController {
         Button source = (Button) event.getSource();
         Window stage = source.getScene().getWindow();
         List<PaintingEntry> paintings = new ArrayList<>();
-        PackExporter exporter = new PackExporter(paintings);
+        PackExporter exporter = new PackExporter(this, paintings);
 
-        for (ImageEntry entry : paintingCandidates) {
+        for (PaintingCard entry : paintingCandidates) {
             if (entry.isErrored)
                 continue;
             Pair<Integer, Integer> size = NONE;
@@ -135,7 +140,7 @@ public class HelloController {
                 if (!newValue.matches("\\p{Lower}*")) {
                     field.setText(newValue.toLowerCase(Locale.ROOT).replaceAll("[^\\p{Lower}]", ""));
                 }
-                HelloController.modid = newValue;
+                modID = newValue;
             });
         }
     }

@@ -1,8 +1,10 @@
-package jackdaw.paintingpack.paintingpacktool;
+package jackdaw.paintingpack.paintingpacktool.export;
 
 import com.google.gson.Gson;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
+import jackdaw.paintingpack.paintingpacktool.mav.Controller;
+import jackdaw.paintingpack.paintingpacktool.util.PaintingEntry;
 
 import java.io.*;
 import java.nio.file.Files;
@@ -15,9 +17,11 @@ public class PackExporter {
 
     final static Gson gson = new Gson();
     final List<PaintingEntry> paintings;
+    final Controller controller;
 
-    public PackExporter(List<PaintingEntry> paintings) {
+    public PackExporter(Controller controller, List<PaintingEntry> paintings) {
         this.paintings = paintings;
+        this.controller = controller;
     }
 
     public void export(File zipFile) {
@@ -26,7 +30,7 @@ public class PackExporter {
         for (PaintingEntry entry : paintings) {
             JsonObject el = new JsonObject();
             var name = entry.fileName().substring(0, entry.fileName().length() - 4);
-            var uniqueName = HelloController.getModid(":") + name;
+            var uniqueName = controller.getModid(":") + name;
             el.addProperty("name", uniqueName);
             el.addProperty("x", entry.size().getKey());
             el.addProperty("y", entry.size().getValue());
@@ -35,7 +39,7 @@ public class PackExporter {
 
         JsonObject toFile = new JsonObject();
         toFile.add("paintings", array);
-        var modid = HelloController.getModid("");
+        var modid = controller.getModid("");
         String inZipPath = String.format("assets/%s/textures/painting/", modid.isEmpty() ? "paintings" : modid);
 
         try (ZipOutputStream zipStream = new ZipOutputStream(new FileOutputStream(zipFile));
