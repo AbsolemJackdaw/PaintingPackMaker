@@ -1,0 +1,17 @@
+.scroll-bar:vertical {
+    -fx-padding: 3;
+}
+
+.scroll-bar:horizontal {
+    -fx-padding: 3;
+}
+
+.scroll-bar, .scroll-bar:pressed, .scroll-bar:focused {
+    -fx-font-size: 20;
+}
+
+.scroll-bar{
+    -fx-background-color: #c6c6c6;
+    -fx-border-color: #555555;
+    -fx-border-width: 3;
+}

@@ -1,0 +1,142 @@
+package jackdaw.paintingpack.paintingpacktool;
+
+import javafx.event.ActionEvent;
+import javafx.fxml.FXML;
+import javafx.scene.Node;
+import javafx.scene.Parent;
+import javafx.scene.control.Button;
+import javafx.scene.control.RadioButton;
+import javafx.scene.control.ScrollPane;
+import javafx.scene.control.TextField;
+import javafx.scene.image.Image;
+import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.VBox;
+import javafx.stage.FileChooser;
+import javafx.stage.Window;
+import javafx.util.Pair;
+
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Locale;
+import java.util.regex.Pattern;
+
+public class HelloController {
+
+    private static final Pair NONE = new Pair(0, 0);
+    private static String modid = "";
+    final FileChooser fileChooser = new FileChooser();
+    private AnchorPane paintingContainer;
+    private final List<ImageEntry> paintingCandidates = new ArrayList<>();
+
+    public static String getModid(String append) {
+        return HelloController.modid.isEmpty() ? "" : HelloController.modid + append;
+    }
+
+    //hacky way of initializing the window util i find a better way
+    @FXML
+    protected void hoverOver(MouseEvent event) {
+        if (paintingContainer == null) {
+            var root = (VBox) event.getSource();
+            initPane(root);
+        }
+    }
+
+    private void initPane(Parent root) {
+        if (this.paintingContainer == null) {
+            for (Node node : root.getChildrenUnmodifiable()) {
+                if (node instanceof ScrollPane scroll && scroll.getContent() instanceof AnchorPane pane) {
+                    paintingContainer = pane;
+                    SizeListener evt = (scene) -> {
+                        var sw = scene.getWidth() - 40;
+                        pane.minWidthProperty().set(sw);
+                    };
+                    HelloApplication.resizeListeners.add(evt);
+                }
+            }
+        }
+    }
+
+    @FXML
+    protected void selectImages(ActionEvent event) {
+        Button source = (Button) event.getSource();
+        Window stage = source.getScene().getWindow();
+        var list = fileChooser.showOpenMultipleDialog(stage);
+
+        if (list != null && !list.isEmpty())
+            for (File file : list) {
+                try (FileInputStream fis = new FileInputStream(file)) {
+                    Image img = new Image(fis);
+                    var regex = Pattern.compile("^([a-z\\d._/]*)(.png)$");
+                    var collection = new ImageEntry(this, img, file.getName(), file.getAbsolutePath(), !file.getName().matches(regex.pattern()));
+                    collection.addCollectionTo(paintingContainer);
+                    paintingCandidates.add(collection);
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+    }
+
+    @FXML
+    protected void processSelection(ActionEvent event) {
+
+        Button source = (Button) event.getSource();
+        Window stage = source.getScene().getWindow();
+        List<PaintingEntry> paintings = new ArrayList<>();
+        PackExporter exporter = new PackExporter(paintings);
+
+        for (ImageEntry entry : paintingCandidates) {
+            if (entry.isErrored)
+                continue;
+            Pair<Integer, Integer> size = NONE;
+
+            if (entry.group.getSelectedToggle() instanceof RadioButton radioButton)
+                size = PaintingSize.from(radioButton.getText());
+
+            var inputs = entry.getPrompts();
+            if (inputs.size() == 2) {
+                int a = Integer.parseInt(inputs.get(0).getText());
+                int b = Integer.parseInt(inputs.get(1).getText());
+                size = new Pair<>(a, b);
+            }
+
+            paintings.add(new PaintingEntry(entry.imageName, entry.absoluteImagePath, size));
+
+        }
+
+        FileChooser.ExtensionFilter extFilter = new FileChooser.ExtensionFilter("ZIP files (*.zip)", "*.zip");
+        fileChooser.getExtensionFilters().add(extFilter);
+        var exportTo = fileChooser.showSaveDialog(stage);
+        if (exportTo != null)
+            exporter.export(exportTo);
+    }
+
+    public void removeCard(int id) {
+        paintingCandidates.removeIf(imageEntry -> imageEntry.getId() == id);
+    }
+
+    public void recalcPositions(AnchorPane pane) {
+        pane.getChildren().clear();
+        var old = new ArrayList<>(paintingCandidates);
+        paintingCandidates.clear();
+        old.forEach(imageEntry -> {
+            imageEntry.addCollectionTo(pane);
+            paintingCandidates.add(imageEntry);
+        });
+    }
+
+    @FXML
+    public void modIDEntered(MouseEvent inputMethodEvent) {
+        if (inputMethodEvent.getSource() instanceof TextField field && field.textProperty().length().get() == 0) {
+            field.textProperty().addListener((observableValue, oldValue, newValue) -> {
+                if (!newValue.matches("\\p{Lower}*")) {
+                    field.setText(newValue.toLowerCase(Locale.ROOT).replaceAll("[^\\p{Lower}]", ""));
+                }
+                HelloController.modid = newValue;
+            });
+        }
+    }
+}
