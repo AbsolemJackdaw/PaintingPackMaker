@@ -29,8 +29,8 @@ public class HelloController {
     private static final Pair NONE = new Pair(0, 0);
     private static String modid = "";
     final FileChooser fileChooser = new FileChooser();
-    private AnchorPane paintingContainer;
     private final List<ImageEntry> paintingCandidates = new ArrayList<>();
+    private AnchorPane paintingContainer;
 
     public static String getModid(String append) {
         return HelloController.modid.isEmpty() ? "" : HelloController.modid + append;
