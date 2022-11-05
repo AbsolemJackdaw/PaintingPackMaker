@@ -14,6 +14,7 @@ import javafx.scene.text.Text;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.regex.Pattern;
 
 public class PaintingCard {
     static final Font font = new Font("System Bold", 14.0);
@@ -39,8 +40,8 @@ public class PaintingCard {
 
     }
 
-    public PaintingCard(Controller controller, Image img, String imageName, String absoluteImagePath, boolean isErrored) {
-        this.isErrored = isErrored;
+    public PaintingCard(Controller controller, Image img, String imageName, String absoluteImagePath) {
+        this.isErrored = checkErrored() > 0;
         this.imageName = imageName;
         this.absoluteImagePath = absoluteImagePath;
         this.controller = controller;
@@ -183,5 +184,29 @@ public class PaintingCard {
 
     public List<TextField> getPrompts() {
         return prompts;
+    }
+
+    public String renamedFile() {
+        return "";
+    }
+
+    private byte checkErrored() {
+        var regex = Pattern.compile("^([a-z\\d._/]*)(.png)$");
+        boolean nameFlag = Pattern.matches(String.valueOf(regex), imageName);
+        boolean extensionFlag = imageName.endsWith(".png");
+        boolean dupe = controller.getPaintingCandidates().stream().anyMatch(paintingCard -> paintingCard.getId() != ID);
+        boolean sameFile = controller.getPaintingCandidates().stream().anyMatch(paintingCard -> paintingCard.getId() != ID && absoluteImagePath.equals(paintingCard.absoluteImagePath));
+        byte errored = 0;
+        if (nameFlag) errored += 1;
+        if (extensionFlag) errored += 2;
+        if (dupe) errored += 4;
+        if (sameFile) errored += 8;
+        return errored;
+    }
+
+    private boolean areNamesEqual(PaintingCard other) {
+        var originalSame = imageName.equals(other.imageName);
+        var renamed = originalSame && imageName.equals(other.renamedFile());
+        return renamed;
     }
 }

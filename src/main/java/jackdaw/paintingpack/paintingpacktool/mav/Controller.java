@@ -27,7 +27,6 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
-import java.util.regex.Pattern;
 
 public class Controller {
 
@@ -75,8 +74,8 @@ public class Controller {
             for (File file : list) {
                 try (FileInputStream fis = new FileInputStream(file)) {
                     Image img = new Image(fis);
-                    var regex = Pattern.compile("^([a-z\\d._/]*)(.png)$");
-                    var collection = new PaintingCard(this, img, file.getName(), file.getAbsolutePath(), !file.getName().matches(regex.pattern()));
+
+                    var collection = new PaintingCard(this, img, file.getName(), file.getAbsolutePath());
                     collection.addCollectionTo(paintingContainer);
                     paintingCandidates.add(collection);
                 } catch (IOException e) {
@@ -93,22 +92,24 @@ public class Controller {
         List<PaintingEntry> paintings = new ArrayList<>();
         PackExporter exporter = new PackExporter(this, paintings);
 
-        for (PaintingCard entry : paintingCandidates) {
-            if (entry.isErrored)
+        for (PaintingCard card : paintingCandidates) {
+            if (card.isErrored)
                 continue;
             Pair<Integer, Integer> size = NONE;
 
-            if (entry.group.getSelectedToggle() instanceof RadioButton radioButton)
+            if (card.group.getSelectedToggle() instanceof RadioButton radioButton)
                 size = PaintingSize.from(radioButton.getText());
 
-            var inputs = entry.getPrompts();
+            var inputs = card.getPrompts();
             if (size == null) {
                 int a = Integer.parseInt(inputs.get(0).getText());
                 int b = Integer.parseInt(inputs.get(1).getText());
                 size = new Pair<>(a, b);
             }
-
-            paintings.add(new PaintingEntry(entry.imageName, entry.absoluteImagePath, size));
+            var newName = card.imageName;
+            if (!card.renamedFile().isBlank())
+                newName = card.renamedFile();
+            paintings.add(new PaintingEntry(card.imageName, card.absoluteImagePath, card.renamedFile(), size));
 
         }
 
@@ -143,5 +144,9 @@ public class Controller {
                 modID = newValue;
             });
         }
+    }
+
+    public List<PaintingCard> getPaintingCandidates() {
+        return paintingCandidates;
     }
 }

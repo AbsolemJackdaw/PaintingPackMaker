@@ -37,7 +37,12 @@ public class PackExporter {
             //copy over images
             for (PaintingEntry entry : paintings) {
                 zipStream.putNextEntry(new ZipEntry(inZipPath + entry.fileName()));
-                Files.copy(Path.of(entry.absoluteImagePath()), zipStream);
+
+                if (!entry.renamed().isBlank()) {
+                    String dest = entry.absoluteImagePath().replace(entry.fileName(), entry.renamed());
+                    Files.copy(Files.copy(Path.of(entry.absoluteImagePath()), Path.of(dest)), zipStream);
+                } else
+                    Files.copy(Path.of(entry.absoluteImagePath()), zipStream);
             }
             //make painting json
             zipStream.putNextEntry(new ZipEntry("paintings++.json"));
