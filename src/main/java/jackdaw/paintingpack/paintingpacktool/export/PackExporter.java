@@ -25,38 +25,60 @@ public class PackExporter {
     }
 
     public void export(File zipFile) {
-        JsonArray array = new JsonArray();
 
-        for (PaintingEntry entry : paintings) {
-            JsonObject el = new JsonObject();
-            var name = entry.fileName().substring(0, entry.fileName().length() - 4);
-            var uniqueName = controller.getModid(":") + name;
-            el.addProperty("name", uniqueName);
-            el.addProperty("x", entry.size().getKey());
-            el.addProperty("y", entry.size().getValue());
-            array.add(el);
-        }
-
-        JsonObject toFile = new JsonObject();
-        toFile.add("paintings", array);
-        var modid = controller.getModid("");
-        String inZipPath = String.format("assets/%s/textures/painting/", modid.isEmpty() ? "paintings" : modid);
+        var modId = controller.getModId("");
+        String inZipPath = String.format("assets/%s/textures/painting/", modId.isEmpty() ? "paintings" : modId);
 
         try (ZipOutputStream zipStream = new ZipOutputStream(new FileOutputStream(zipFile));
              Writer writer = new OutputStreamWriter(zipStream)) {
-
+            //generate subfolders
             zipStream.putNextEntry(new ZipEntry(inZipPath));
 
+            //copy over images
             for (PaintingEntry entry : paintings) {
                 zipStream.putNextEntry(new ZipEntry(inZipPath + entry.fileName()));
                 Files.copy(Path.of(entry.absoluteImagePath()), zipStream);
             }
+            //make painting json
             zipStream.putNextEntry(new ZipEntry("paintings++.json"));
+            //prepare content for json
+            JsonObject toFile = new JsonObject();
+            toFile.add("paintings", paintingEntries());
+            //write content to json
             gson.toJson(toFile, writer);
+            writer.flush();
+
+            //make pack mcmeta
+            zipStream.putNextEntry(new ZipEntry("pack.mcmeta"));
+            JsonObject packFile = new JsonObject();
+            packFile.add("pack", mcMetaContent());
+            gson.toJson(packFile, writer);
+            writer.flush();
 
         } catch (IOException e) {
             System.out.println(e);
         }
 
+    }
+
+    private JsonArray paintingEntries() {
+        JsonArray array = new JsonArray();
+        for (PaintingEntry entry : paintings) {
+            JsonObject el = new JsonObject();
+            var name = entry.fileName().substring(0, entry.fileName().length() - 4);
+            var uniqueName = controller.getModId(":") + name;
+            el.addProperty("name", uniqueName);
+            el.addProperty("x", entry.size().getKey());
+            el.addProperty("y", entry.size().getValue());
+            array.add(el);
+        }
+        return array;
+    }
+
+    private JsonObject mcMetaContent() {
+        JsonObject content = new JsonObject();
+        content.addProperty("pack_format", 9);
+        content.addProperty("description", "Painting Pack made with Painting Pack Maker!");
+        return content;
     }
 }

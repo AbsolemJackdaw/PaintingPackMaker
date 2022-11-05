@@ -37,7 +37,7 @@ public class Controller {
     private String modID = "";
     private AnchorPane paintingContainer;
 
-    public String getModid(String append) {
+    public String getModId(String append) {
         return modID.isEmpty() ? "" : modID + append;
     }
 
@@ -102,7 +102,7 @@ public class Controller {
                 size = PaintingSize.from(radioButton.getText());
 
             var inputs = entry.getPrompts();
-            if (inputs.size() == 2) {
+            if (size == null) {
                 int a = Integer.parseInt(inputs.get(0).getText());
                 int b = Integer.parseInt(inputs.get(1).getText());
                 size = new Pair<>(a, b);
