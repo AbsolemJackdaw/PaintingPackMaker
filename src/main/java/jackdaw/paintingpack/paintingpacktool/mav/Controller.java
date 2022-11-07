@@ -76,7 +76,7 @@ public class Controller {
                     Image img = new Image(fis);
 
                     var collection = new PaintingCard(this, img, file.getName(), file.getAbsolutePath());
-                    collection.addCollectionTo(paintingContainer);
+                    collection.allocateID(paintingContainer);
                     paintingCandidates.add(collection);
                 } catch (IOException e) {
                     e.printStackTrace();
@@ -129,7 +129,7 @@ public class Controller {
         var old = new ArrayList<>(paintingCandidates);
         paintingCandidates.clear();
         old.forEach(imageEntry -> {
-            imageEntry.addCollectionTo(pane);
+            imageEntry.allocateID(pane);
             paintingCandidates.add(imageEntry);
         });
     }
