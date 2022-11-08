@@ -36,13 +36,10 @@ public class PackExporter {
 
             //copy over images
             for (PaintingEntry entry : paintings) {
-                zipStream.putNextEntry(new ZipEntry(inZipPath + entry.fileName()));
-
-                if (!entry.renamed().isBlank()) {
-                    String dest = entry.absoluteImagePath().replace(entry.fileName(), entry.renamed());
-                    Files.copy(Files.copy(Path.of(entry.absoluteImagePath()), Path.of(dest)), zipStream);
-                } else
-                    Files.copy(Path.of(entry.absoluteImagePath()), zipStream);
+                //create new file with correct name
+                zipStream.putNextEntry(new ZipEntry(inZipPath + entry.currentName()));
+                //copy the original to the correctly named file
+                Files.copy(Path.of(entry.absoluteImagePath()), zipStream);
             }
             //make painting json
             zipStream.putNextEntry(new ZipEntry("paintings++.json"));
@@ -70,7 +67,7 @@ public class PackExporter {
         JsonArray array = new JsonArray();
         for (PaintingEntry entry : paintings) {
             JsonObject el = new JsonObject();
-            var name = entry.fileName().substring(0, entry.fileName().length() - 4);
+            var name = entry.currentName().substring(0, entry.currentName().length() - 4);
             var uniqueName = controller.getModId(":") + name;
             el.addProperty("name", uniqueName);
             el.addProperty("x", entry.size().getKey());

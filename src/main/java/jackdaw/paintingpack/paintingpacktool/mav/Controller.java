@@ -106,11 +106,8 @@ public class Controller {
                 int b = Integer.parseInt(inputs.get(1).getText());
                 size = new Pair<>(a, b);
             }
-            var newName = card.imageName;
-            if (!card.renamedFile().isBlank())
-                newName = card.renamedFile();
-            paintings.add(new PaintingEntry(card.imageName, card.absoluteImagePath, card.renamedFile(), size));
 
+            paintings.add(new PaintingEntry(card.imageName, card.renamedFile(), card.absoluteImagePath, size));
         }
 
         FileChooser.ExtensionFilter extFilter = new FileChooser.ExtensionFilter("ZIP files (*.zip)", "*.zip");

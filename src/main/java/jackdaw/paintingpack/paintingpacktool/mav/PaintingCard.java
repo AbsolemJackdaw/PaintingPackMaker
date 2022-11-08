@@ -75,8 +75,8 @@ public class PaintingCard {
 
             var renameBox = new VBox();
             renameBox.getChildren().add(makeSimpleLabel("painting name:"));
-            var renamefield = makeAcceptedNameTextFieldPrompt("");
-            renamefield.setText(renamedFile.isBlank() ? imageName : renamedFile);
+            var renamefield = makeAcceptedNameTextFieldPrompt(renamedFile.isBlank() ? imageName : renamedFile);
+            //renamefield.setText(renamedFile.isBlank() ? imageName : renamedFile);
             renameBox.getChildren().add(renamefield);
             rightPaneBottom.getChildren().add(renameBox);
 //            rightPaneBottom.getChildren().add(makeInfoLabel(imageName));
@@ -129,7 +129,9 @@ public class PaintingCard {
 
         field.setOnKeyPressed(keyEvent -> {
             if (keyEvent.getCode().equals(KeyCode.ENTER)) {
-                if (!renamedFile.endsWith(".png"))
+                if (renamedFile.isBlank() || renamedFile.equals(imageName))
+                    renamedFile = "";
+                else if (!renamedFile.endsWith(".png"))
                     renamedFile = renamedFile.concat(".png");
                 resetCard();
             }
