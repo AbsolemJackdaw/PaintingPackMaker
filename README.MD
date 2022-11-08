@@ -2,7 +2,15 @@
 
 ### Downloads
 
-[PPM v1.0.0](http://adfoc.us/7840041)
+- [PPM v1.0.2 .exe](http://adfoc.us/78400485727042)
+- [PPM v1.0.2 .jar](http://adfoc.us/78400485740987)
+
+<details open>
+<summary>older versions</summary>
+
+- [PPM v1.0.0](http://adfoc.us/7840041)
+
+</details>
 
 ### Requirements
 
@@ -61,6 +69,6 @@ For any issues or questions, feel free to make a ticket in
 the [Issues tab](https://github.com/AbsolemJackdaw/PaintingPackMaker/issues) above,  
 or alternatively, visit my [Discord Server](https://discord.gg/8MEdFZh) for direct contact!
 
+### Example
 
-### Example  
 ![UI example](https://i.imgur.com/4upR0iJ.png)
