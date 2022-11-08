@@ -14,7 +14,7 @@
 
 ### Requirements
 
-- Java 17
+- Java 17 (might require you to install the jdk instead of the jre)
 - Minecraft 1.17 and up
 - (optional) A png image optimizer like [Pinga](https://css-ig.net/pinga)
 
@@ -71,4 +71,10 @@ or alternatively, visit my [Discord Server](https://discord.gg/8MEdFZh) for dire
 
 ### Example
 
+![UI example](https://i.imgur.com/CrLRP9g.png)
+<details>
+<summary>old pictures</summary>
+
 ![UI example](https://i.imgur.com/4upR0iJ.png)
+
+</details>
