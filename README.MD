@@ -5,7 +5,7 @@
 - [PPM v1.0.2 .exe](http://adfoc.us/78400485727042)
 - [PPM v1.0.2 .jar](http://adfoc.us/78400485740987)
 
-<details open>
+<details>
 <summary>older versions</summary>
 
 - [PPM v1.0.0](http://adfoc.us/7840041)
