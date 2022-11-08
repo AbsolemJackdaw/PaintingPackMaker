@@ -40,7 +40,7 @@ Valid images are
 
 #### Step 2
 
-Define the size of your image but picking one of the radio buttons,  
+Define the size of your image buy picking one of the radio buttons,  
 or defining a custom size in the given numerical text fields.
 
 #### Step 3 (optional)
