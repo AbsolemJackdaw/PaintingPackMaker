@@ -38,7 +38,6 @@ public class PaintingCard {
     private final byte EXTN = 0b0100;
     private final byte SAME = 0b1000;
 
-
     {
         generalContainer.prefHeight(100.0);
         generalContainer.setAlignment(Pos.TOP_RIGHT);
