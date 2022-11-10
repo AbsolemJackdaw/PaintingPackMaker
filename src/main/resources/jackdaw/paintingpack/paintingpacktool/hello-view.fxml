@@ -30,57 +30,9 @@
     <ScrollPane fitToHeight="true" fitToWidth="true" minWidth="400.0" style="-fx-background-color: #555555; -fx-border-color: #555555; -fx-border-width: 2; -fx-hbar-policy: as-needed; -fx-vbar-policy: as-needed;" stylesheets="@scrollbar.css" VBox.vgrow="ALWAYS">
         <content>
             <AnchorPane minWidth="400.0" nodeOrientation="LEFT_TO_RIGHT" style="-fx-background-color: black;" VBox.vgrow="ALWAYS">
-
-                <!--                <children>-->
-                <!--                    <HBox alignment="TOP_RIGHT" nodeOrientation="LEFT_TO_RIGHT" prefHeight="100.0" prefWidth="580.0" style="-fx-background-color: lightgray;" VBox.vgrow="ALWAYS">-->
-                <!--                        <children>-->
-                <!--                            <StackPane minWidth="250.0" prefHeight="170.0" prefWidth="250.0">-->
-                <!--                                <children>-->
-                <!--                                    <ImageView fitHeight="100.0" fitWidth="100.0" pickOnBounds="true" smooth="false" StackPane.alignment="TOP_LEFT">-->
-                <!--                                    </ImageView>-->
-                <!--                                </children>-->
-                <!--                            </StackPane>-->
-                <!--                            <VBox minWidth="320.0">-->
-                <!--                                <children>-->
-                <!--                                    <HBox alignment="TOP_RIGHT">-->
-                <!--                                        <children>-->
-                <!--                                            <RadioButton mnemonicParsing="false" prefHeight="30.0" prefWidth="80.0" text="1x1">-->
-                <!--                                                <toggleGroup>-->
-                <!--                                                    <ToggleGroup fx:id="size" />-->
-                <!--                                                </toggleGroup>-->
-                <!--                                            </RadioButton>-->
-                <!--                                            <RadioButton mnemonicParsing="false" prefHeight="30.0" prefWidth="80.0" text="2x1" toggleGroup="$size" />-->
-                <!--                                            <RadioButton mnemonicParsing="false" prefHeight="30.0" prefWidth="80.0" text="1x2" toggleGroup="$size" />-->
-                <!--                                            <RadioButton mnemonicParsing="false" prefHeight="30.0" prefWidth="80.0" text="2x2" toggleGroup="$size" />-->
-                <!--                                        </children>-->
-                <!--                                    </HBox>-->
-                <!--                           <HBox prefHeight="100.0" prefWidth="200.0">-->
-                <!--                              <children>-->
-                <!--                                 <VBox prefHeight="200.0" prefWidth="100.0">-->
-                <!--                                    <children>-->
-                <!--                                                <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Custom size:">-->
-                <!--                                                    <VBox.margin>-->
-                <!--                                                        <Insets bottom="5.0" />-->
-                <!--                                                    </VBox.margin>-->
-                <!--                                                </Text>-->
-                <!--                                                <TextField maxWidth="100.0" minWidth="50.0" prefWidth="100.0" promptText="width in blocks" />-->
-                <!--                                                <TextField maxWidth="100.0" minWidth="50.0" prefWidth="50.0" promptText="height in blocks" />-->
-                <!--                                    </children>-->
-                <!--                                 </VBox>-->
-                <!--                                 <Label text="lorum ipsum whatever there is in that text i have no idea so i'm writing osmething down to fill in this blank space of an excuse for a wrap">-->
-                <!--                                    <font>-->
-                <!--                                       <Font name="System Bold" size="14.0" />-->
-                <!--                                    </font>-->
-                <!--                                 </Label>-->
-                <!--                              </children>-->
-                <!--                           </HBox>-->
-                <!--                                </children>-->
-                <!--                            </VBox>-->
-                <!--                        </children>-->
-                <!--                    </HBox>-->
-                <!--                </children>-->
-
-            </AnchorPane>
+            <children>
+               <VBox prefHeight="200.0" prefWidth="100.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" />
+            </children></AnchorPane>
         </content>
     </ScrollPane>
 </VBox>
