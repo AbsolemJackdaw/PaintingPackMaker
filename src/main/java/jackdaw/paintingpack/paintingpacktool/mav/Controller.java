@@ -96,15 +96,14 @@ public class Controller {
             if (card.isErrored)
                 continue;
             Pair<Integer, Integer> size = NONE;
-
+            var inputs = card.getPrompts();
             if (card.group.getSelectedToggle() instanceof RadioButton radioButton)
                 size = PaintingSize.from(radioButton.getText());
 
-            var inputs = card.getPrompts();
-            if (size == null) {
+            else if (inputs.size() == 2) {
                 int a = Integer.parseInt(inputs.get(0).getText());
                 int b = Integer.parseInt(inputs.get(1).getText());
-                size = new Pair<>(a, b);
+                size = new Pair<>(a*16, b*16);
             }
 
             paintings.add(new PaintingEntry(card.imageName, card.renamedFile(), card.absoluteImagePath, size));

@@ -278,6 +278,7 @@ public class PaintingCard {
         rightPaneBottom.getChildren().clear();
         rightPaneTop.getChildren().clear();
         customSizeContainer.getChildren().clear();
+        prompts.clear();
         init();
     }
 }
