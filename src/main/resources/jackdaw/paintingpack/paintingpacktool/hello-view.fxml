@@ -5,7 +5,7 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
 
-<VBox alignment="CENTER" minWidth="400.0" onMouseEntered="#hoverOver" style="-fx-background-color: #c6c6c6; -fx-border-color: white; -fx-border-width: 4;" xmlns="http://javafx.com/javafx/11.0.14-internal" xmlns:fx="http://javafx.com/fxml/1" fx:controller="jackdaw.paintingpack.paintingpacktool.mav.Controller">
+<VBox alignment="CENTER" minWidth="400.0" style="-fx-background-color: #c6c6c6; -fx-border-color: white; -fx-border-width: 4;" xmlns="http://javafx.com/javafx/11.0.14-internal" xmlns:fx="http://javafx.com/fxml/1" fx:controller="jackdaw.paintingpack.paintingpacktool.controller.Controller">
     <padding>
         <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
     </padding>
@@ -29,9 +29,9 @@
     </HBox>
     <ScrollPane fitToHeight="true" fitToWidth="true" minWidth="400.0" style="-fx-background-color: #555555; -fx-border-color: #555555; -fx-border-width: 2; -fx-hbar-policy: as-needed; -fx-vbar-policy: as-needed;" stylesheets="@scrollbar.css" VBox.vgrow="ALWAYS">
         <content>
-            <AnchorPane minWidth="400.0" nodeOrientation="LEFT_TO_RIGHT" style="-fx-background-color: black;" VBox.vgrow="ALWAYS">
+            <AnchorPane nodeOrientation="LEFT_TO_RIGHT" style="-fx-background-color: black;" VBox.vgrow="ALWAYS">
             <children>
-               <VBox prefHeight="200.0" prefWidth="100.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" />
+               <VBox fx:id="cardList" spacing="5.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" />
             </children></AnchorPane>
         </content>
     </ScrollPane>

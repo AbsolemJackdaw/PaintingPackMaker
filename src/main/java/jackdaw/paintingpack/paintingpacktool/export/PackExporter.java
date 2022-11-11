@@ -3,8 +3,7 @@ package jackdaw.paintingpack.paintingpacktool.export;
 import com.google.gson.Gson;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
-import jackdaw.paintingpack.paintingpacktool.mav.Controller;
-import jackdaw.paintingpack.paintingpacktool.util.PaintingEntry;
+import jackdaw.paintingpack.paintingpacktool.controller.Controller;
 
 import java.io.*;
 import java.nio.file.Files;
@@ -37,7 +36,7 @@ public class PackExporter {
             //copy over images
             for (PaintingEntry entry : paintings) {
                 //create new file with correct name
-                zipStream.putNextEntry(new ZipEntry(inZipPath + entry.currentName()));
+                zipStream.putNextEntry(new ZipEntry(inZipPath + entry.name()));
                 //copy the original to the correctly named file
                 Files.copy(Path.of(entry.absoluteImagePath()), zipStream);
             }
@@ -67,7 +66,7 @@ public class PackExporter {
         JsonArray array = new JsonArray();
         for (PaintingEntry entry : paintings) {
             JsonObject el = new JsonObject();
-            var name = entry.currentName().substring(0, entry.currentName().length() - 4);
+            var name = entry.name().substring(0, entry.name().length() - 4);
             var uniqueName = controller.getModId(":") + name;
             el.addProperty("name", uniqueName);
             el.addProperty("x", entry.size().getKey());

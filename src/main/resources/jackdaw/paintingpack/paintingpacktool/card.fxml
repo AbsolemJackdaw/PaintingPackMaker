@@ -2,131 +2,125 @@
 
 <?import javafx.geometry.*?>
 <?import javafx.scene.control.*?>
-<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.image.*?>
 <?import javafx.scene.layout.*?>
-<?import javafx.scene.text.Text?>
-<GridPane fx:controller="jackdaw.paintingpack.paintingpacktool.mav.CardController" fx:id="generalId"
-          maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="100.0"
-          prefWidth="400.0" xmlns="http://javafx.com/javafx/11.0.14-internal" xmlns:fx="http://javafx.com/fxml/1">
+<?import javafx.scene.text.*?>
+
+<GridPane fx:id="generalContainer" prefHeight="100.0" prefWidth="400.0" xmlns="http://javafx.com/javafx/11.0.14-internal" xmlns:fx="http://javafx.com/fxml/1" fx:controller="jackdaw.paintingpack.paintingpacktool.controller.CardController">
     <columnConstraints>
-        <ColumnConstraints percentWidth="40.0"/>
-        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" percentWidth="60.0" prefWidth="100.0"/>
+        <ColumnConstraints percentWidth="40.0" />
+        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" percentWidth="60.0" prefWidth="100.0" />
     </columnConstraints>
     <rowConstraints>
-        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES"/>
+        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
     </rowConstraints>
-    <children>
-        <StackPane fx:id="leftpane" prefHeight="150.0" prefWidth="200.0" style="-fx-background-color: red;"
-                   GridPane.halignment="CENTER" GridPane.hgrow="ALWAYS" GridPane.valignment="CENTER"
-                   GridPane.vgrow="ALWAYS">
-            <children>
-                <ImageView fx:id="image" pickOnBounds="true" preserveRatio="true"/>
-            </children>
-            <GridPane.margin>
-                <Insets/>
-            </GridPane.margin>
-            <padding>
-                <Insets bottom="5.0" left="5.0" right="5.0" top="5.0"/>
-            </padding>
-        </StackPane>
-        <StackPane prefHeight="150.0" prefWidth="200.0" GridPane.columnIndex="1">
-            <children>
-                <VBox fx:id="rightpane" prefHeight="200.0" prefWidth="100.0" style="-fx-background-color: green;">
-                    <children>
-                        <HBox fx:id="rightPaneTop" VBox.vgrow="ALWAYS">
-                            <children>
-                                <RadioButton fx:id="oneByOne" mnemonicParsing="false"
-                                             onMouseClicked="#radioButtonMouseClick" text="1x1" HBox.hgrow="ALWAYS">
-                                    <HBox.margin>
-                                        <Insets right="10.0"/>
-                                    </HBox.margin>
-                                </RadioButton>
-                                <RadioButton fx:id="oneByTwo" layoutX="10.0" layoutY="10.0" mnemonicParsing="false"
-                                             onMouseClicked="#radioButtonMouseClick" text="1x2" HBox.hgrow="ALWAYS">
-                                    <HBox.margin>
-                                        <Insets right="10.0"/>
-                                    </HBox.margin>
-                                </RadioButton>
-                                <RadioButton fx:id="twoByOne" layoutX="50.0" layoutY="10.0" mnemonicParsing="false"
-                                             onMouseClicked="#radioButtonMouseClick" text="2x1" HBox.hgrow="ALWAYS">
-                                    <HBox.margin>
-                                        <Insets right="10.0"/>
-                                    </HBox.margin>
-                                </RadioButton>
-                                <RadioButton fx:id="twoByTwo" layoutX="90.0" layoutY="10.0" mnemonicParsing="false"
-                                             onMouseClicked="#radioButtonMouseClick" text="2x2" HBox.hgrow="ALWAYS">
-                                    <HBox.margin>
-                                        <Insets right="10.0"/>
-                                    </HBox.margin>
-                                </RadioButton>
-                            </children>
-                            <VBox.margin>
-                                <Insets top="5.0"/>
-                            </VBox.margin>
-                        </HBox>
-                        <HBox fx:id="rightPaneBottom" prefHeight="100.0" prefWidth="200.0">
-                            <children>
-                                <VBox fx:id="customSize" prefHeight="200.0" prefWidth="100.0">
-                                    <children>
-                                        <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Custom Size:"
-                                              VBox.vgrow="ALWAYS">
-                                            <VBox.margin>
-                                                <Insets/>
-                                            </VBox.margin>
-                                        </Text>
-                                        <TextField promptText="width in blocks" VBox.vgrow="ALWAYS">
-                                            <VBox.margin>
-                                                <Insets top="5.0"/>
-                                            </VBox.margin>
-                                        </TextField>
-                                        <TextField layoutX="10.0" layoutY="26.0" promptText="height in blocks"
-                                                   VBox.vgrow="ALWAYS">
-                                            <VBox.margin>
-                                                <Insets/>
-                                            </VBox.margin>
-                                        </TextField>
-                                    </children>
-                                </VBox>
-                                <VBox prefHeight="200.0" prefWidth="100.0">
-                                    <children>
-                                        <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Painting Name:">
-                                            <VBox.margin>
-                                                <Insets/>
-                                            </VBox.margin>
-                                        </Text>
-                                        <TextField fx:id="currentName" onKeyPressed="#onKeyPressedRemoveButton"
-                                                   promptText="currentName">
-                                            <opaqueInsets>
-                                                <Insets/>
-                                            </opaqueInsets>
-                                            <VBox.margin>
-                                                <Insets top="5.0"/>
-                                            </VBox.margin>
-                                        </TextField>
-                                        <Button mnemonicParsing="false"
-                                                style="-fx-background-color: darkred; -fx-border-radius: 5;"
-                                                text="Remove" textFill="WHITE" VBox.vgrow="ALWAYS"/>
-                                    </children>
-                                    <HBox.margin>
-                                        <Insets left="5.0"/>
-                                    </HBox.margin>
-                                </VBox>
-                            </children>
-                            <VBox.margin>
-                                <Insets top="5.0"/>
-                            </VBox.margin>
-                        </HBox>
-                    </children>
+    <StackPane fx:id="leftPane" prefHeight="150.0" prefWidth="200.0" GridPane.halignment="RIGHT" GridPane.hgrow="ALWAYS" GridPane.valignment="CENTER" GridPane.vgrow="ALWAYS">
+        <GridPane.margin>
+            <Insets />
+        </GridPane.margin>
+        <ImageView fx:id="imageView" fitHeight="80.0" pickOnBounds="true" preserveRatio="true" smooth="false" />
+    </StackPane>
+    <StackPane GridPane.columnIndex="1" GridPane.halignment="LEFT" GridPane.hgrow="ALWAYS" GridPane.vgrow="ALWAYS">
+        <VBox fx:id="rightPane">
+            <HBox fx:id="radioButtonPane" VBox.vgrow="ALWAYS">
+                <VBox.margin>
+                    <Insets top="5.0" />
+                </VBox.margin>
+                <RadioButton fx:id="oneByOne" mnemonicParsing="false" onMouseClicked="#radioButtonMouseClick" text="1x1" HBox.hgrow="ALWAYS">
+                    <HBox.margin>
+                        <Insets right="20.0" />
+                    </HBox.margin>
+                    <toggleGroup>
+                        <ToggleGroup fx:id="templateSize" />
+                    </toggleGroup>
+                </RadioButton>
+                <RadioButton fx:id="oneByTwo" layoutX="10.0" layoutY="10.0" mnemonicParsing="false" onMouseClicked="#radioButtonMouseClick" text="1x2" HBox.hgrow="ALWAYS">
+                    <HBox.margin>
+                        <Insets right="20.0" />
+                    </HBox.margin>
+                    <toggleGroup>
+                        <fx:reference source="templateSize" />
+                    </toggleGroup>
+                </RadioButton>
+                <RadioButton fx:id="twoByOne" layoutX="50.0" layoutY="10.0" mnemonicParsing="false" onMouseClicked="#radioButtonMouseClick" text="2x1" HBox.hgrow="ALWAYS">
+                    <HBox.margin>
+                        <Insets right="20.0" />
+                    </HBox.margin>
+                    <toggleGroup>
+                        <fx:reference source="templateSize" />
+                    </toggleGroup>
+                </RadioButton>
+                <RadioButton fx:id="twoByTwo" layoutX="90.0" layoutY="10.0" mnemonicParsing="false" onMouseClicked="#radioButtonMouseClick" text="2x2" HBox.hgrow="ALWAYS">
+                    <HBox.margin>
+                        <Insets right="20.0" />
+                    </HBox.margin>
+                    <toggleGroup>
+                        <fx:reference source="templateSize" />
+                    </toggleGroup>
+                </RadioButton>
+            </HBox>
+            <HBox fx:id="rightPaneBottom" prefHeight="100.0" prefWidth="200.0">
+                <VBox.margin>
+                    <Insets top="5.0" />
+                </VBox.margin>
+                <VBox fx:id="customSize" prefHeight="200.0" prefWidth="100.0">
+                    <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Custom Size:" VBox.vgrow="ALWAYS">
+                        <VBox.margin>
+                            <Insets />
+                        </VBox.margin>
+                    </Text>
+                    <TextField fx:id="widthPrompt" promptText="width in blocks" VBox.vgrow="ALWAYS">
+                        <VBox.margin>
+                            <Insets top="5.0" />
+                        </VBox.margin>
+                    </TextField>
+                    <TextField fx:id="heightPrompt" layoutX="10.0" layoutY="26.0" promptText="height in blocks" VBox.vgrow="ALWAYS">
+                        <VBox.margin>
+                            <Insets />
+                        </VBox.margin>
+                    </TextField>
                 </VBox>
-                <VBox fx:id="errorPane" prefHeight="200.0" prefWidth="100.0" style="-fx-background-color: orange;"
-                      visible="false">
-                    <children>
-                        <Button contentDisplay="RIGHT" mnemonicParsing="false" onKeyPressed="#onKeyPressedRemoveButton"
-                                style="-fx-background-color: darkred; -fx-border-radius: 5;" text="Remove"
-                                textFill="WHITE"/>
-                    </children>
+                <VBox prefHeight="200.0" prefWidth="100.0">
+                    <HBox.margin>
+                        <Insets left="5.0" />
+                    </HBox.margin>
+                    <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Painting Name:">
+                        <VBox.margin>
+                            <Insets />
+                        </VBox.margin>
+                    </Text>
+                    <TextField fx:id="currentName" onKeyPressed="#nameFieldKeyPress" promptText="currentName">
+                        <opaqueInsets>
+                            <Insets />
+                        </opaqueInsets>
+                        <VBox.margin>
+                            <Insets top="5.0" />
+                        </VBox.margin>
+                    </TextField>
+                    <Button mnemonicParsing="false" onMouseClicked="#onMouseClickedRemoveButton" style="-fx-background-color: darkred; -fx-border-radius: 5;" text="Remove" textFill="WHITE" VBox.vgrow="ALWAYS" />
                 </VBox>
-            </children>
-        </StackPane>
-    </children>
+            </HBox>
+        </VBox>
+        <VBox fx:id="errorPane" disable="true" prefHeight="200.0" prefWidth="100.0" visible="false">
+            <HBox prefHeight="100.0" prefWidth="200.0">
+                <VBox prefHeight="200.0" prefWidth="100.0" HBox.hgrow="ALWAYS">
+                    <Text fx:id="errorOne" strokeType="OUTSIDE" strokeWidth="0.0" text="error 1" />
+                    <Text fx:id="errorTwo" strokeType="OUTSIDE" strokeWidth="0.0" text="error 2" />
+                    <Text fx:id="errorThree" strokeType="OUTSIDE" strokeWidth="0.0" text="error 3" />
+                    <Text fx:id="errorFour" strokeType="OUTSIDE" strokeWidth="0.0" text="error 4" />
+                    <HBox>
+                        <TextField fx:id="currentNameError" onKeyPressed="#nameFieldKeyPress" promptText="rename painting" HBox.hgrow="ALWAYS">
+                            <opaqueInsets>
+                                <Insets />
+                            </opaqueInsets>
+                        </TextField>
+                        <Button contentDisplay="RIGHT" mnemonicParsing="false" onMouseClicked="#onMouseClickedRemoveButton" style="-fx-background-color: darkred; -fx-border-radius: 5;" text="Remove" textFill="WHITE" HBox.hgrow="ALWAYS" />
+                    </HBox>
+                </VBox>
+            </HBox>
+        </VBox>
+      <GridPane.margin>
+         <Insets />
+      </GridPane.margin>
+    </StackPane>
 </GridPane>
