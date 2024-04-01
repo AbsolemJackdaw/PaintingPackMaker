@@ -7,11 +7,9 @@ import javafx.scene.control.ToggleGroup;
 
 public class NumericalInputField implements ChangeListener<String> {
     final TextField field;
-    final ToggleGroup group;
 
-    public NumericalInputField(TextField field, ToggleGroup group) {
+    public NumericalInputField(TextField field) {
         this.field = field;
-        this.group = group;
     }
 
     @Override
@@ -19,7 +17,5 @@ public class NumericalInputField implements ChangeListener<String> {
         if (!newValue.matches("\\d")) {
             field.setText(newValue.replaceAll("\\D", ""));
         }
-        if (group.getSelectedToggle() != null)
-            group.selectToggle(null);
     }
 }

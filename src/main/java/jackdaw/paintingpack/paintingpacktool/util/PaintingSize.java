@@ -1,31 +1,23 @@
 package jackdaw.paintingpack.paintingpacktool.util;
 
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.util.Pair;
 
-public enum PaintingSize {
-    OneXOne("1x1", new Pair<>(16, 16)),
-    OneXTwo("1x2", new Pair<>(16, 32)),
-    TwoXOne("2x1", new Pair<>(32, 16)),
-    TwoXTwo("2x2", new Pair<>(32, 32));
+public class PaintingSize {
+    private static final ObservableList<String> SIZEOPTIONS = FXCollections.observableArrayList();
+    public static final Pair<Integer, Integer> NONE = new Pair<>(0, 0);
+    public static final String SEPERATOR = "x";
 
-    private static final Pair<Integer, Integer> NONE = new Pair<>(0, 0);
-    private final String text;
-    private final Pair<Integer, Integer> pair;
-
-    PaintingSize(String text, Pair<Integer, Integer> pair) {
-        this.text = text;
-        this.pair = pair;
+    static {
+        var maxX = 5;
+        var maxY = 5;
+        for (int y = 1; y <= maxY; y++)
+            for (int x = 1; x <= maxX; x++)
+                SIZEOPTIONS.add(x + PaintingSize.SEPERATOR + y);
     }
 
-    public static Pair<Integer, Integer> from(String text) {
-        for (PaintingSize p : PaintingSize.values()) {
-            if (p.text.equals(text))
-                return p.pair;
-        }
-        return NONE;
-    }
-
-    public String getText() {
-        return text;
+    public static ObservableList<String> getAllNames() {
+        return FXCollections.observableList(SIZEOPTIONS.stream().sorted().toList());
     }
 }

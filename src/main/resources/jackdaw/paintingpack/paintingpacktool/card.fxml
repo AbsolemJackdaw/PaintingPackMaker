@@ -6,7 +6,7 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
 
-<GridPane fx:id="generalContainer" prefHeight="100.0" prefWidth="400.0" xmlns="http://javafx.com/javafx/11.0.14-internal" xmlns:fx="http://javafx.com/fxml/1" fx:controller="jackdaw.paintingpack.paintingpacktool.controller.CardController">
+<GridPane fx:id="generalContainer" prefHeight="100.0" prefWidth="400.0" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="jackdaw.paintingpack.paintingpacktool.controller.CardController">
     <columnConstraints>
         <ColumnConstraints percentWidth="40.0" />
         <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" percentWidth="60.0" prefWidth="100.0" />
@@ -14,7 +14,7 @@
     <rowConstraints>
         <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
     </rowConstraints>
-    <StackPane fx:id="leftPane" prefHeight="150.0" prefWidth="200.0" GridPane.halignment="RIGHT" GridPane.hgrow="ALWAYS" GridPane.valignment="CENTER" GridPane.vgrow="ALWAYS">
+    <StackPane fx:id="leftPane" GridPane.halignment="RIGHT" GridPane.hgrow="ALWAYS" GridPane.valignment="CENTER" GridPane.vgrow="ALWAYS">
         <GridPane.margin>
             <Insets />
         </GridPane.margin>
@@ -22,48 +22,25 @@
     </StackPane>
     <StackPane GridPane.columnIndex="1" GridPane.halignment="LEFT" GridPane.hgrow="ALWAYS" GridPane.vgrow="ALWAYS">
         <VBox fx:id="rightPane">
-            <HBox fx:id="radioButtonPane" VBox.vgrow="ALWAYS">
+         <HBox>
+            <children>
+               <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Select Size:" HBox.hgrow="ALWAYS">
+                  <HBox.margin>
+                     <Insets />
+                  </HBox.margin></Text>
+               <ChoiceBox fx:id="dropdownMenu" HBox.hgrow="ALWAYS">
+                  <HBox.margin>
+                     <Insets left="10.0" />
+                  </HBox.margin>
+               </ChoiceBox>
+               <Region />
+            </children>
+         </HBox>
+            <HBox fx:id="rightPaneBottom">
                 <VBox.margin>
                     <Insets top="5.0" />
                 </VBox.margin>
-                <RadioButton fx:id="oneByOne" mnemonicParsing="false" onMouseClicked="#radioButtonMouseClick" text="1x1" HBox.hgrow="ALWAYS">
-                    <HBox.margin>
-                        <Insets right="20.0" />
-                    </HBox.margin>
-                    <toggleGroup>
-                        <ToggleGroup fx:id="templateSize" />
-                    </toggleGroup>
-                </RadioButton>
-                <RadioButton fx:id="oneByTwo" layoutX="10.0" layoutY="10.0" mnemonicParsing="false" onMouseClicked="#radioButtonMouseClick" text="1x2" HBox.hgrow="ALWAYS">
-                    <HBox.margin>
-                        <Insets right="20.0" />
-                    </HBox.margin>
-                    <toggleGroup>
-                        <fx:reference source="templateSize" />
-                    </toggleGroup>
-                </RadioButton>
-                <RadioButton fx:id="twoByOne" layoutX="50.0" layoutY="10.0" mnemonicParsing="false" onMouseClicked="#radioButtonMouseClick" text="2x1" HBox.hgrow="ALWAYS">
-                    <HBox.margin>
-                        <Insets right="20.0" />
-                    </HBox.margin>
-                    <toggleGroup>
-                        <fx:reference source="templateSize" />
-                    </toggleGroup>
-                </RadioButton>
-                <RadioButton fx:id="twoByTwo" layoutX="90.0" layoutY="10.0" mnemonicParsing="false" onMouseClicked="#radioButtonMouseClick" text="2x2" HBox.hgrow="ALWAYS">
-                    <HBox.margin>
-                        <Insets right="20.0" />
-                    </HBox.margin>
-                    <toggleGroup>
-                        <fx:reference source="templateSize" />
-                    </toggleGroup>
-                </RadioButton>
-            </HBox>
-            <HBox fx:id="rightPaneBottom" prefHeight="100.0" prefWidth="200.0">
-                <VBox.margin>
-                    <Insets top="5.0" />
-                </VBox.margin>
-                <VBox fx:id="customSize" prefHeight="200.0" prefWidth="100.0">
+                <VBox fx:id="customSize">
                     <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Custom Size:" VBox.vgrow="ALWAYS">
                         <VBox.margin>
                             <Insets />
@@ -80,7 +57,7 @@
                         </VBox.margin>
                     </TextField>
                 </VBox>
-                <VBox prefHeight="200.0" prefWidth="100.0">
+                <VBox>
                     <HBox.margin>
                         <Insets left="5.0" />
                     </HBox.margin>
@@ -101,7 +78,7 @@
                 </VBox>
             </HBox>
         </VBox>
-        <VBox fx:id="errorPane" disable="true" prefHeight="200.0" prefWidth="100.0" visible="false">
+        <VBox fx:id="errorPane" disable="true" visible="false">
             <HBox prefHeight="100.0" prefWidth="200.0">
                 <VBox prefHeight="200.0" prefWidth="100.0" HBox.hgrow="ALWAYS">
                     <Text fx:id="errorOne" strokeType="OUTSIDE" strokeWidth="0.0" text="error 1" />

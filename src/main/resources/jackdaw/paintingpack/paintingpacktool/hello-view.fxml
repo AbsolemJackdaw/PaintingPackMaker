@@ -5,34 +5,41 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
 
-<VBox alignment="CENTER" minWidth="400.0" style="-fx-background-color: #c6c6c6; -fx-border-color: white; -fx-border-width: 4;" xmlns="http://javafx.com/javafx/11.0.14-internal" xmlns:fx="http://javafx.com/fxml/1" fx:controller="jackdaw.paintingpack.paintingpacktool.controller.Controller">
-    <padding>
-        <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
-    </padding>
-    <HBox id="topContainer" alignment="CENTER_LEFT" fillHeight="false" minWidth="400.0" spacing="20.0" VBox.vgrow="NEVER">
-        <children>
-            <Button onAction="#selectImages" stylesheets="@button.css" text="Select Images" />
-         <Text fill="#363636" strokeType="OUTSIDE" strokeWidth="0.0" text="Unique Id:">
-            <font>
-               <Font size="18.0" />
-            </font>
-         </Text>
-            <TextField onMouseClicked="#modIDEntered" style="-fx-background-color: #8b8b8b; -fx-border-color: #555555; -fx-border-width: 2;" />
-            <Button onAction="#processSelection" stylesheets="@button.css" text="Finalize Pack" />
-        </children>
-      <padding>
-         <Insets bottom="20.0" />
-      </padding>
-      <VBox.margin>
-         <Insets />
-      </VBox.margin>
-    </HBox>
-    <ScrollPane fitToHeight="true" fitToWidth="true" minWidth="400.0" style="-fx-background-color: #555555; -fx-border-color: #555555; -fx-border-width: 2; -fx-hbar-policy: as-needed; -fx-vbar-policy: as-needed;" stylesheets="@scrollbar.css" VBox.vgrow="ALWAYS">
-        <content>
-            <AnchorPane nodeOrientation="LEFT_TO_RIGHT" style="-fx-background-color: black;" VBox.vgrow="ALWAYS">
-            <children>
-               <VBox fx:id="cardList" spacing="5.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" />
-            </children></AnchorPane>
-        </content>
-    </ScrollPane>
-</VBox>
+<BorderPane prefHeight="125.0" prefWidth="721.0" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="jackdaw.paintingpack.paintingpacktool.controller.Controller">
+   <top>
+       <HBox id="topContainer" alignment="CENTER" fillHeight="false" spacing="20.0">
+           <children>
+               <Button onAction="#selectImages" stylesheets="@button.css" text="Select Images" HBox.hgrow="NEVER">
+               <HBox.margin>
+                  <Insets />
+               </HBox.margin></Button>
+            <Region HBox.hgrow="ALWAYS" />
+            <Text fill="#363636" strokeType="OUTSIDE" strokeWidth="0.0" text="Unique Id:" HBox.hgrow="NEVER">
+               <font>
+                  <Font size="18.0" />
+               </font>
+            </Text>
+               <TextField onMouseClicked="#modIDEntered" style="-fx-background-color: #8b8b8b; -fx-border-color: #555555; -fx-border-width: 2;" HBox.hgrow="ALWAYS" />
+            <Region HBox.hgrow="ALWAYS" />
+               <Button alignment="CENTER_RIGHT" onAction="#processSelection" stylesheets="@button.css" text="Finalize Pack" HBox.hgrow="NEVER" />
+           </children>
+         <padding>
+            <Insets bottom="20.0" />
+         </padding>
+       </HBox>
+   </top>
+   <center>
+       <ScrollPane fitToHeight="true" fitToWidth="true" style="-fx-background-color: #555555; -fx-border-color: #555555; -fx-border-width: 2; -fx-hbar-policy: as-needed; -fx-vbar-policy: as-needed;" stylesheets="@scrollbar.css" BorderPane.alignment="CENTER">
+           <content>
+               <AnchorPane nodeOrientation="LEFT_TO_RIGHT" style="-fx-background-color: black;" VBox.vgrow="ALWAYS">
+               <children>
+                  <VBox fx:id="cardList" spacing="5.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" />
+               </children>
+            </AnchorPane>
+           </content>
+       </ScrollPane>
+   </center>
+   <padding>
+      <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
+   </padding>
+</BorderPane>

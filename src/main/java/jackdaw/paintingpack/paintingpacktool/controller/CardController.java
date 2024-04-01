@@ -4,13 +4,18 @@ import jackdaw.paintingpack.paintingpacktool.listener.AcceptableNameInputField;
 import jackdaw.paintingpack.paintingpacktool.listener.NumericalInputField;
 import jackdaw.paintingpack.paintingpacktool.export.PaintingEntry;
 import jackdaw.paintingpack.paintingpacktool.util.PaintingSize;
+import javafx.animation.KeyValue;
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
+import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.RadioButton;
 import javafx.scene.control.TextField;
 import javafx.scene.control.ToggleGroup;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyCombination;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.*;
@@ -36,7 +41,7 @@ public class CardController {
     public VBox rightPane;
 
     @FXML
-    public HBox radioButtonPane;
+    public ChoiceBox<String> dropdownMenu;
 
     @FXML
     public TextField currentName;
@@ -49,13 +54,7 @@ public class CardController {
     public TextField heightPrompt;
 
     @FXML
-    public ToggleGroup templateSize;
-
-    @FXML
     public ImageView imageView;
-
-    @FXML
-    public RadioButton oneByOne;
 
     @FXML
     public Text errorOne, errorTwo, errorThree, errorFour;
@@ -77,11 +76,12 @@ public class CardController {
 
     @FXML
     public void initialize() {
-        widthPrompt.textProperty().addListener(new NumericalInputField(widthPrompt, templateSize));
-        heightPrompt.textProperty().addListener(new NumericalInputField(heightPrompt, templateSize));
+        dropdownMenu.setItems(PaintingSize.getAllNames());
+        dropdownMenu.setOnAction(onDropDownSelected());
+        heightPrompt.textProperty().addListener(new NumericalInputField(heightPrompt));
+        widthPrompt.textProperty().addListener(new NumericalInputField(widthPrompt));
         currentName.textProperty().addListener(new AcceptableNameInputField(currentName));
         currentNameError.textProperty().addListener(new AcceptableNameInputField(currentNameError));
-        templateSize.selectToggle(oneByOne);
         errors = new Text[]{errorOne, errorTwo, errorThree, errorFour};
     }
 
@@ -91,8 +91,7 @@ public class CardController {
         this.absoluteImagePath = absoluteImagePath;
         this.scene = scene;
         processErrors();
-        if (!isErrored)
-            currentName.setText(imageName);
+        if (!isErrored) currentName.setText(imageName);
         Paint paint = (scene.getChildren().size()) % 2 == 0 ? isErrored ? REDGRAY : Color.GREY : isErrored ? REDSLATE : Color.SLATEGRAY;
         generalContainer.setBackground(new Background(new BackgroundFill(paint, null, null)));
     }
@@ -113,25 +112,15 @@ public class CardController {
     @FXML
     public void nameFieldKeyPress(KeyEvent event) {
         if (event.getCode().equals(KeyCode.ENTER)) {
-            if (renameField().getText().isBlank())
-                renameField().setText(imageName);
+            if (renameField().getText().isBlank()) renameField().setText(imageName);
             if (!renameField().getText().endsWith(".png"))
                 renameField().setText(renameField().getText().concat(".png"));
             renameName();
             boolean previouslyErrored = isErrored;
             processErrors();
             repaintBackground();
-            if (previouslyErrored && !isErrored)
-                currentName.setText(currentNameError.getText());
+            if (previouslyErrored && !isErrored) currentName.setText(currentNameError.getText());
         }
-    }
-
-    @FXML
-    public void radioButtonMouseClick(MouseEvent mouseEvent) {
-        widthPrompt.setText("");
-        heightPrompt.setText("");
-        if (mouseEvent.getSource() instanceof RadioButton radioButton)
-            radioButton.setSelected(true);
     }
 
     private byte getErrorCode() {
@@ -149,14 +138,10 @@ public class CardController {
     }
 
     private boolean areNamesEqual(CardController other) {
-        if (!isRenamed() && !other.isRenamed())
-            return imageName.equals(other.imageName);
-        else if (isRenamed() && !isRenamed())
-            return renameName().equals(other.imageName);
-        else if (!isRenamed() && other.isRenamed())
-            return renameName().equals(other.renameName());
-        else
-            return renameName().equals(other.renameName());
+        if (!isRenamed() && !other.isRenamed()) return imageName.equals(other.imageName);
+        else if (isRenamed() && !isRenamed()) return renameName().equals(other.imageName);
+        else if (!isRenamed() && other.isRenamed()) return renameName().equals(other.renameName());
+        else return renameName().equals(other.renameName());
     }
 
     private List<String> getErrorString(byte errorCode) {
@@ -166,10 +151,7 @@ public class CardController {
                 $3
                 $4
                 """;
-        issue = issue.replace("$1", (byte) (errorCode & CHARS) == CHARS ? "name contains unaccepted characters. allowed are [a-z0-9._/-]" : "")
-                .replace("$2", (byte) (errorCode & EXTN) == EXTN ? "not a .png file" : "")
-                .replace("$3", (byte) (errorCode & DUPE) == DUPE ? "a painting with this name is already in the list" : "")
-                .replace("$4", (byte) (errorCode & SAME) == SAME ? "this file is already present in the list" : "");
+        issue = issue.replace("$1", (byte) (errorCode & CHARS) == CHARS ? "name contains unaccepted characters. allowed are [a-z0-9._/-]" : "").replace("$2", (byte) (errorCode & EXTN) == EXTN ? "not a .png file" : "").replace("$3", (byte) (errorCode & DUPE) == DUPE ? "a painting with this name is already in the list" : "").replace("$4", (byte) (errorCode & SAME) == SAME ? "this file is already present in the list" : "");
         return Arrays.stream(issue.split("\\n")).filter(s -> !s.isBlank()).toList();
     }
 
@@ -215,17 +197,23 @@ public class CardController {
     }
 
     public Optional<PaintingEntry> getEntryFromCard() {
-        if (isErrored)
-            return Optional.empty();
-        Pair<Integer, Integer> size = NONE;
-        if (templateSize.getSelectedToggle() instanceof RadioButton radioButton)
-            size = PaintingSize.from(radioButton.getText());
-
-        else if (!widthPrompt.getText().isBlank() && !heightPrompt.getText().isBlank()) {
+        if (isErrored) return Optional.empty();
+        var size = PaintingSize.NONE;
+        if (!widthPrompt.getText().isBlank() && !heightPrompt.getText().isBlank()) {
             int a = Integer.parseInt(widthPrompt.getText());
             int b = Integer.parseInt(heightPrompt.getText());
             size = new Pair<>(a * 16, b * 16);
         }
         return Optional.of(new PaintingEntry(currentName.getText(), absoluteImagePath, size));
+    }
+
+    private EventHandler<ActionEvent> onDropDownSelected() {
+        return e -> {
+            if (e.getTarget() instanceof ChoiceBox<?> dropDown && dropDown.getValue() instanceof String name) {
+                var size = name.split(PaintingSize.SEPERATOR);
+                this.widthPrompt.setText(size[0]);
+                this.heightPrompt.setText(size[1]);
+            }
+        };
     }
 }
