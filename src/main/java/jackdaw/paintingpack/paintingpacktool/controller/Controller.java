@@ -2,10 +2,13 @@ package jackdaw.paintingpack.paintingpacktool.controller;
 
 import jackdaw.paintingpack.paintingpacktool.export.PackExporter;
 import jackdaw.paintingpack.paintingpacktool.export.PaintingEntry;
+import jackdaw.paintingpack.paintingpacktool.listener.AcceptableNameInputField;
+import jackdaw.paintingpack.paintingpacktool.util.McVersions;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.control.Button;
+import javafx.scene.control.ComboBox;
 import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.input.MouseEvent;
@@ -23,22 +26,41 @@ import java.util.Locale;
 
 public class Controller {
 
-    final FileChooser fileChooser = new FileChooser();
-    private String modID = "";
+    final FileChooser imageChooser = new FileChooser();
+    final FileChooser zipExporter = new FileChooser();
+
     private static final List<CardController> cardControllers = new ArrayList<>();
 
     @FXML
-    public VBox cardList;
+    public TextField uniqueID;
 
-    public String getModId(String append) {
-        return modID.isEmpty() ? "" : modID + append;
+    @FXML
+    public VBox cardList;
+    @FXML
+    public ComboBox<String> mcVersion;
+
+    @FXML
+    public void initialize() {
+        uniqueID.textProperty().addListener(new AcceptableNameInputField(uniqueID));
+        mcVersion.setItems(McVersions.getVersions());
+        mcVersion.setOnAction(e -> {
+            if (e.getTarget() instanceof ComboBox<?> dropdown && dropdown.getValue() instanceof String version) {
+                uniqueID.setDisable(!McVersions.isAfterOneEighteenTwo(version));
+                uniqueID.setText("");
+            }
+        });
     }
 
     @FXML
     protected void selectImages(ActionEvent event) {
         Button source = (Button) event.getSource();
         Window stage = source.getScene().getWindow();
-        var list = fileChooser.showOpenMultipleDialog(stage);
+
+        //filter out only valid images
+        FileChooser.ExtensionFilter extFilter = new FileChooser.ExtensionFilter("PNG files (*.png)", "*.png");
+        imageChooser.getExtensionFilters().add(extFilter);
+
+        var list = imageChooser.showOpenMultipleDialog(stage);
 
         if (list != null && !list.isEmpty())
             for (File file : list) {
@@ -69,8 +91,8 @@ public class Controller {
             card.getEntryFromCard().ifPresent(paintings::add);
 
         FileChooser.ExtensionFilter extFilter = new FileChooser.ExtensionFilter("ZIP files (*.zip)", "*.zip");
-        fileChooser.getExtensionFilters().add(extFilter);
-        var exportTo = fileChooser.showSaveDialog(stage);
+        zipExporter.getExtensionFilters().add(extFilter);
+        var exportTo = zipExporter.showSaveDialog(stage);
         if (exportTo != null)
             exporter.export(exportTo);
     }
@@ -82,7 +104,6 @@ public class Controller {
                 if (!newValue.matches("\\p{Lower}*")) {
                     field.setText(newValue.toLowerCase(Locale.ROOT).replaceAll("[^\\p{Lower}]", ""));
                 }
-                modID = newValue;
             });
         }
     }

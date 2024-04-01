@@ -19,8 +19,9 @@
                   <Font size="18.0" />
                </font>
             </Text>
-               <TextField onMouseClicked="#modIDEntered" style="-fx-background-color: #8b8b8b; -fx-border-color: #555555; -fx-border-width: 2;" HBox.hgrow="ALWAYS" />
+               <TextField fx:id="uniqueID" disable="true" onMouseClicked="#modIDEntered" style="-fx-background-color: #8b8b8b; -fx-border-color: #555555; -fx-border-width: 2;" HBox.hgrow="ALWAYS" />
             <Region HBox.hgrow="ALWAYS" />
+            <ComboBox fx:id="mcVersion" promptText="Minecraft Version" />
                <Button alignment="CENTER_RIGHT" onAction="#processSelection" stylesheets="@button.css" text="Finalize Pack" HBox.hgrow="NEVER" />
            </children>
          <padding>

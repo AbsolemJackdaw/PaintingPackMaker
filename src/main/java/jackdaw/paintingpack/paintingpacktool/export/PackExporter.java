@@ -4,6 +4,7 @@ import com.google.gson.Gson;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import jackdaw.paintingpack.paintingpacktool.controller.Controller;
+import jackdaw.paintingpack.paintingpacktool.util.McVersions;
 
 import java.io.*;
 import java.nio.file.Files;
@@ -25,8 +26,8 @@ public class PackExporter {
 
     public void export(File zipFile) {
 
-        var modId = controller.getModId("");
-        String inZipPath = String.format("assets/%s/textures/painting/", modId.isEmpty() ? "paintings" : modId);
+        var modId = getModId("");
+        String inZipPath = String.format("assets/%s/textures/painting/", modId);
 
         try (ZipOutputStream zipStream = new ZipOutputStream(new FileOutputStream(zipFile));
              Writer writer = new OutputStreamWriter(zipStream)) {
@@ -67,7 +68,7 @@ public class PackExporter {
         for (PaintingEntry entry : paintings) {
             JsonObject el = new JsonObject();
             var name = entry.name().substring(0, entry.name().length() - 4);
-            var uniqueName = controller.getModId(":") + name;
+            var uniqueName = getModId(String.format(":%s", name));
             el.addProperty("name", uniqueName);
             el.addProperty("x", entry.size().getKey());
             el.addProperty("y", entry.size().getValue());
@@ -78,8 +79,17 @@ public class PackExporter {
 
     private JsonObject mcMetaContent() {
         JsonObject content = new JsonObject();
-        content.addProperty("pack_format", 9);
+        JsonObject arrayContent = new JsonObject();
+        arrayContent.addProperty("min_inclusive", 16);
+        arrayContent.addProperty("max_inclusive", 1048576);
+        content.addProperty("pack_format", McVersions.getPackVersion(controller.mcVersion.getValue()));
+        content.add("supported_formats", arrayContent);
         content.addProperty("description", "Painting Pack made with Painting Pack Maker!");
         return content;
+    }
+
+    public String getModId(String append) {
+        var id = controller.uniqueID.getText();
+        return (id.isEmpty() ? "paintings" : id) + append;
     }
 }
