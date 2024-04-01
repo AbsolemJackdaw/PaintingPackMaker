@@ -1,7 +1,7 @@
 package jackdaw.paintingpack.paintingpacktool;
 
-public class PaintingPackMaker {
+public class Main {
     public static void main(String[] args) {
-        PaintingPackMakerApp.main(args);
+        PPMApp.main(args);
     }
 }
