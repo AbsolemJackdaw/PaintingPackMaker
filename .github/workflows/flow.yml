@@ -1,16 +1,25 @@
-name: Test Packaging Jar And Upload
-
-on:
-  push:
-    branches: [ master ]
+name: Build installer for supported os
+on: push
 
 jobs:
-  build_jar:
-    runs-on: ubuntu-latest
+  build-app:
+    strategy:
+      matrix:
+        os: [ macos-latest, ubuntu-latest, windows-latest ]
+    name: Build the application
+    runs-on: ${{ matrix.os }}
     steps:
-      - uses: actions/checkout@v2
-      - uses: eric2788/maven-jar-publish@master
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      - name: checkout
+        uses: actions/checkout@v2
+      - name: Setup Java
+        uses: actions/setup-java@v3
         with:
-          body-path: changelog.md
+          java-version: '17'
+          distribution: 'adopt'
+      - run: ./mvnw install
+      - run: mkdir staging && cp app/build/installer/* staging
+      - name: upload build result
+        uses: actions/upload-artifact@v2
+        with:
+          name: PPM_1.0.5-${{matrix.os}}
+          path: staging
