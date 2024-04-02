@@ -1,7 +1,9 @@
 plugins {
     id 'application'
     id 'org.openjfx.javafxplugin' version '0.1.0'
+    id 'edu.sc.seis.launch4j' version '2.4.6'
 }
+
 repositories {
     mavenCentral()
 }
@@ -21,5 +23,34 @@ tasks.withType(JavaCompile) {
 
 dependencies {
     implementation 'com.google.code.gson:gson:2.8.9'
-    implementation('org.controlsfx:controlsfx:11.1.1')
+
+    // We have to do this to make sure native libs for each platform are included
+    implementation group: 'org.openjfx', name: 'javafx-base', version: '14', classifier: 'linux'
+    implementation group: 'org.openjfx', name: 'javafx-base', version: '14', classifier: 'mac'
+    implementation group: 'org.openjfx', name: 'javafx-base', version: '14', classifier: 'win'
+    implementation group: 'org.openjfx', name: 'javafx-controls', version: '14', classifier: 'linux'
+    implementation group: 'org.openjfx', name: 'javafx-controls', version: '14', classifier: 'mac'
+    implementation group: 'org.openjfx', name: 'javafx-controls', version: '14', classifier: 'win'
+    implementation group: 'org.openjfx', name: 'javafx-fxml', version: '14', classifier: 'linux'
+    implementation group: 'org.openjfx', name: 'javafx-fxml', version: '14', classifier: 'mac'
+    implementation group: 'org.openjfx', name: 'javafx-fxml', version: '14', classifier: 'win'
+    implementation group: 'org.openjfx', name: 'javafx-graphics', version: '14', classifier: 'linux'
+    implementation group: 'org.openjfx', name: 'javafx-graphics', version: '14', classifier: 'mac'
+    implementation group: 'org.openjfx', name: 'javafx-graphics', version: '14', classifier: 'win'
+}
+
+jar {
+    manifest {
+        attributes 'Main-Class': application.mainClass
+    }
+}
+
+launch4j {
+    bundledJrePath = "jdk-17+20-jre"
+    bundledJre64Bit = true
+    copyright = "Absolem Jackdaw"
+    icon = "${projectDir}/src/main/resources/grapes.ico"
+    mainClassName = application.mainClass
+    outfile = "PPM-test.exe"
+    productName = "Painting Pack Maker"
 }
