@@ -3,7 +3,6 @@ package jackdaw.paintingpack.paintingpacktool.listener;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.scene.control.TextField;
-import javafx.scene.control.ToggleGroup;
 
 public class NumericalInputField implements ChangeListener<String> {
     final TextField field;
