@@ -17,7 +17,7 @@ public class PPMApp extends Application {
     @Override
     public void start(Stage stage) throws IOException {
         FXMLLoader fxmlLoader = new FXMLLoader(PPMApp.class.getResource("hello-view.fxml"));
-        Scene scene = new Scene(fxmlLoader.load(), 720, 320 * 2);
+        Scene scene = new Scene(fxmlLoader.load(), 720, 640);
         stage.getIcons().add(new Image("grapes.png"));
         stage.setTitle("Painting Pack Maker");
         stage.setMinWidth(720);

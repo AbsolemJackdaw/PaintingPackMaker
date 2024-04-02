@@ -1,3 +1,6 @@
 Manifest-Version: 1.0
 Main-Class: jackdaw.paintingpack.paintingpacktool.Main
+Class-Path: javafx-fxml-21-win.jar gson-2.8.9.jar javafx-base-21-win.jar
+  javafx-graphics-21-win.jar controlsfx-11.1.1.jar javafx-controls-21-wi
+ n.jar
 
