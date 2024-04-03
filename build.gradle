@@ -48,16 +48,21 @@ jar {
 }
 
 launch4j {
-    //run unpackJRE.ps1 on first usage
-    bundledJrePath = "jdk-17+20-jre"
-    requires64Bit = true
     mainClassName = application.mainClassName
     icon = "${projectDir}/src/main/resources/grapes.ico"
     outfile = "PPM.exe"
     copyConfigurable = []
     jarTask = project.tasks.shadowJar
+    downloadUrl = "https://github.com/AbsolemJackdaw/PaintingPackMaker/releases"
+    supportUrl = "https://github.com/AbsolemJackdaw/PaintingPackMaker/issues"
+    version = outfile_version
+    textVersion = outfile_version
+    copyright = "MIT"
+    productName = "Painting Pack Maker"
+    windowTitle = "Painting Pack Maker ${outfile_version}"
+    headerType = "gui"
 }
 
-shadowJar{
+shadowJar {
     archiveFileName = "PPM.jar"
 }
