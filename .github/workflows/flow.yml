@@ -45,8 +45,8 @@ jobs:
           draft: false
           prerelease: false
 
-      - name: Upload Release Asset exe
-        id: upload-release-asset
+      - name: Upload exe
+        id: upload-exe
         uses: actions/upload-release-asset@v1
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
@@ -55,8 +55,8 @@ jobs:
           asset_path: /build/launch4j/PPM.exe
           asset_name: PPM.exe
 
-      - name: Upload Release Asset zip
-        id: upload-release-asset
+      - name: Upload jar
+        id: upload-jar
         uses: actions/upload-release-asset@v1
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
