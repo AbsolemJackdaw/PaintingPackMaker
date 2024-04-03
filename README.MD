@@ -1,13 +1,15 @@
 # Painting Pack Maker
 
-### Downloads
+### Downloads  
 
-- [PPM v1.0.4 .exe](http://adfoc.us/78400485750315)
-- [PPM v1.0.4 .jar](http://adfoc.us/78400485757802)
+- [PPM v1.0.5 .exe](https://github.com/AbsolemJackdaw/PaintingPackMaker/releases/download/1.0.5/PPM.exe)
+- [PPM v1.0.5 .jar](https://github.com/AbsolemJackdaw/PaintingPackMaker/releases/download/1.0.5/PPM.jar)
 
 <details>
 <summary>older versions</summary>
 
+- [PPM v1.0.4 .exe](http://adfoc.us/78400485750315)
+- [PPM v1.0.4 .jar](http://adfoc.us/78400485757802)
 - [PPM v1.0.3 .exe](http://adfoc.us/78400485741017)
 - [PPM v1.0.3 .jar](http://adfoc.us/78400485750314)
 - [PPM v1.0.2 .exe](http://adfoc.us/78400485727042)
@@ -73,12 +75,13 @@ For any issues or questions, feel free to make a ticket in
 the [Issues tab](https://github.com/AbsolemJackdaw/PaintingPackMaker/issues) above,  
 or alternatively, visit my [Discord Server](https://discord.gg/8MEdFZh) for direct contact!
 
-### Example
+### Example  
 
-![UI example](https://i.imgur.com/CrLRP9g.png)
+![UI example](https://i.imgur.com/o09WvB6.png)
+
 <details>
 <summary>old pictures</summary>
-
+![UI example](https://i.imgur.com/CrLRP9g.png)
 ![UI example](https://i.imgur.com/4upR0iJ.png)
 
 </details>
