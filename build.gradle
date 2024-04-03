@@ -48,6 +48,9 @@ jar {
 }
 
 launch4j {
+    //run unpackJRE.ps1 on first usage
+    bundledJrePath = "jdk-17+20-jre"
+    requires64Bit = true
     mainClassName = application.mainClassName
     icon = "${projectDir}/src/main/resources/grapes.ico"
     outfile = 'PPM_1.0.5.exe'
