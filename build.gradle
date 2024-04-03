@@ -1,0 +1,63 @@
+plugins {
+    id 'java'
+    id 'application'
+    id 'edu.sc.seis.launch4j' version '3.0.5'
+    id 'org.openjfx.javafxplugin' version '0.1.0'
+    id 'com.github.johnrengelman.shadow' version '5.2.0'
+}
+
+repositories {
+    mavenCentral()
+}
+
+application() {
+    mainClassName('jackdaw.paintingpack.paintingpacktool.Main')
+}
+
+javafx {
+    version = "21"
+    modules = ['javafx.controls', 'javafx.fxml']
+}
+
+tasks.withType(JavaCompile) {
+    options.encoding = 'UTF-8'
+}
+
+dependencies {
+    implementation 'com.google.code.gson:gson:2.8.9'
+
+    // We have to do this to make sure native libs for each platform are included
+    implementation group: 'org.openjfx', name: 'javafx-base', version: '14', classifier: 'linux'
+    implementation group: 'org.openjfx', name: 'javafx-base', version: '14', classifier: 'mac'
+    implementation group: 'org.openjfx', name: 'javafx-base', version: '14', classifier: 'win'
+    implementation group: 'org.openjfx', name: 'javafx-controls', version: '14', classifier: 'linux'
+    implementation group: 'org.openjfx', name: 'javafx-controls', version: '14', classifier: 'mac'
+    implementation group: 'org.openjfx', name: 'javafx-controls', version: '14', classifier: 'win'
+    implementation group: 'org.openjfx', name: 'javafx-fxml', version: '14', classifier: 'linux'
+    implementation group: 'org.openjfx', name: 'javafx-fxml', version: '14', classifier: 'mac'
+    implementation group: 'org.openjfx', name: 'javafx-fxml', version: '14', classifier: 'win'
+    implementation group: 'org.openjfx', name: 'javafx-graphics', version: '14', classifier: 'linux'
+    implementation group: 'org.openjfx', name: 'javafx-graphics', version: '14', classifier: 'mac'
+    implementation group: 'org.openjfx', name: 'javafx-graphics', version: '14', classifier: 'win'
+}
+
+jar {
+    manifest {
+        attributes 'Main-Class': application.mainClass
+    }
+}
+
+launch4j {
+    //run unpackJRE.ps1 on first usage
+    bundledJrePath = "jdk-17+20-jre"
+    requires64Bit = true
+    mainClassName = application.mainClassName
+    icon = "${projectDir}/src/main/resources/grapes.ico"
+    outfile = "PPM.exe"
+    copyConfigurable = []
+    jarTask = project.tasks.shadowJar
+}
+
+shadowJar{
+    archiveFileName = "PPM.jar"
+}
