@@ -1,4 +1,4 @@
-name: Create useable exe
+name: Create Release with Artifacts
 
 on:
   push:
@@ -7,7 +7,7 @@ on:
 
 jobs:
   build:
-    runs-on: ubuntu-latest
+    runs-on: windows-latest
 
     steps:
       - uses: actions/checkout@v2
@@ -24,7 +24,7 @@ jobs:
           powershell /c Get-ChildItem -Path jdk-17+20-jre
 
       - name: Create installer and runnable jar
-        run: sh gradlew shadowJar createExe
+        run: ./gradlew shadowJar createExe
 
       - name: Create Release
         id: create_release
