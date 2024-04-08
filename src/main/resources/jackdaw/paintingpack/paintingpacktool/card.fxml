@@ -6,7 +6,7 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
 
-<GridPane fx:id="generalContainer" prefHeight="100.0" prefWidth="400.0" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="jackdaw.paintingpack.paintingpacktool.controller.CardController">
+<GridPane fx:id="generalContainer" maxHeight="-Infinity" prefHeight="110.0" prefWidth="400.0" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="jackdaw.paintingpack.paintingpacktool.controller.CardController">
     <columnConstraints>
         <ColumnConstraints percentWidth="40.0" />
         <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" percentWidth="60.0" prefWidth="100.0" />
@@ -79,19 +79,28 @@
             </HBox>
         </VBox>
         <VBox fx:id="errorPane" disable="true" visible="false">
-            <HBox prefHeight="100.0" prefWidth="200.0">
-                <VBox prefHeight="200.0" prefWidth="100.0" HBox.hgrow="ALWAYS">
+            <HBox>
+                <VBox HBox.hgrow="ALWAYS">
                     <Text fx:id="errorOne" strokeType="OUTSIDE" strokeWidth="0.0" text="error 1" />
                     <Text fx:id="errorTwo" strokeType="OUTSIDE" strokeWidth="0.0" text="error 2" />
                     <Text fx:id="errorThree" strokeType="OUTSIDE" strokeWidth="0.0" text="error 3" />
                     <Text fx:id="errorFour" strokeType="OUTSIDE" strokeWidth="0.0" text="error 4" />
                     <HBox>
-                        <TextField fx:id="currentNameError" onKeyPressed="#nameFieldKeyPress" promptText="rename painting" HBox.hgrow="ALWAYS">
-                            <opaqueInsets>
-                                <Insets />
-                            </opaqueInsets>
-                        </TextField>
-                        <Button contentDisplay="RIGHT" mnemonicParsing="false" onMouseClicked="#onMouseClickedRemoveButton" style="-fx-background-color: darkred; -fx-border-radius: 5;" text="Remove" textFill="WHITE" HBox.hgrow="ALWAYS" />
+                  <children>
+                           <TextField fx:id="currentNameError" maxWidth="200.0" onKeyPressed="#nameFieldKeyPress" promptText="rename painting" visible="false">
+                               <opaqueInsets>
+                                   <Insets />
+                               </opaqueInsets>
+                        <HBox.margin>
+                           <Insets bottom="10.0" />
+                        </HBox.margin>
+                           </TextField>
+                           <Button contentDisplay="RIGHT" mnemonicParsing="false" onMouseClicked="#onMouseClickedRemoveButton" style="-fx-background-color: darkred; -fx-border-radius: 5;" text="Remove" textFill="WHITE">
+                        <HBox.margin>
+                           <Insets bottom="10.0" />
+                        </HBox.margin>
+                     </Button>
+                  </children>
                     </HBox>
                 </VBox>
             </HBox>

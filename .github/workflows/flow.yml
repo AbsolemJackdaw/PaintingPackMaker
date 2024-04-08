@@ -32,16 +32,16 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }} # This token is provided by Actions, you do not need to create your own token
         with:
-          tag_name: 1.0.6
-          release_name: 1.0.6
+          tag_name: 1.0.7
+          release_name: 1.0.7
           body: |
             Changes
-            - Expand available painting sizes.  
-            - Picking a size now fills the size input fields, rather then having two different inputs.  
-            - Add dropdown menu to pick a minecraft version so the output resourcepack is compatible with it. 
-            - Dropdown menu will disable/enable the 'unique id' text input for the compatible versions.
+            - Add progress bar when loading images
+            - Add auto-detector for painting sizes. (it uses the image size to autofill the size fields)
+            - Base window is now 960 pixels wide instead of 720 to better fit the changes in the UI
             Fixes
-            - Fix export button sabotaging the import button functionality
+            - Fix error cards being out of whack
+            - Image loading improvement : threads are now used and greatly improve loading times
           draft: false
           prerelease: false
 
