@@ -15,18 +15,28 @@ jobs:
       - name: Set up Java
         uses: actions/setup-java@v1
         with:
-          version: 17
+          java-version: 17
 
       - name: Get version from gradle.properties 
         id: get_version
-        run: echo "version=$(./gradlew -q printVersion)" >> $GITHUB_OUTPUT
+        shell: pwsh
+        run: |
+          $version = ./gradlew -q printVersion
+          echo "version=$version" >> $env:GITHUB_OUTPUT
 
       - name: Read changelog
         id: changelog
+        shell: pwsh
         run: |
-          echo "body<<EOF" >> $GITHUB_OUTPUT
-          awk '/^## \[${{ steps.get_version.outputs.version }}\]/,/^## /' CHANGELOG.md | sed '$d' >> $GITHUB_OUTPUT
-          echo "EOF" >> $GITHUB_OUTPUT
+          $version = '${{ steps.get_version.outputs.version }}'
+          $lines = Get-Content CHANGELOG.md
+          $start = $lines.FindIndex({ $_ -match "^## \[$version\]" })
+          $end   = $lines.FindIndex($start+1, { $_ -match "^## " })
+          if ($end -eq -1) { $end = $lines.Count }
+          $section = $lines[$start..($end-1)] -join "`n"
+          echo "body<<EOF" >> $env:GITHUB_OUTPUT
+          echo "$section" >> $env:GITHUB_OUTPUT
+          echo "EOF" >> $env:GITHUB_OUTPUT
 
       - name: Download JRE
         run: |
