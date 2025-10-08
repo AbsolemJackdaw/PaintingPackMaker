@@ -1,13 +1,18 @@
 # Painting Pack Maker
 
+Friendly reminder that this is free software with active maintenance.  
+If you enjoy my mods and software, please feel free to drop an appreciation gift at [my perosnal kofi](https://ko-fi.com/absolemjackdaw)
+
 ### Downloads  
 
-- [PPM v1.0.7 .exe](https://github.com/AbsolemJackdaw/PaintingPackMaker/releases/download/1.0.7/PPM.exe)
-- [PPM v1.0.7 .jar](https://github.com/AbsolemJackdaw/PaintingPackMaker/releases/download/1.0.7/PPM.jar)
+- [PPM v1.0.8 .exe](https://github.com/AbsolemJackdaw/PaintingPackMaker/releases/download/1.0.8/PPM.exe)
+- [PPM v1.0.8 .jar](https://github.com/AbsolemJackdaw/PaintingPackMaker/releases/download/1.0.8/PPM.jar)
 
 <details>
 <summary>older versions</summary>
 
+- [PPM v1.0.7 .exe](https://github.com/AbsolemJackdaw/PaintingPackMaker/releases/download/1.0.7/PPM.exe)
+- [PPM v1.0.7 .jar](https://github.com/AbsolemJackdaw/PaintingPackMaker/releases/download/1.0.7/PPM.jar)
 - [PPM v1.0.6 .exe](https://github.com/AbsolemJackdaw/PaintingPackMaker/releases/download/1.0.6/PPM.exe)
 - [PPM v1.0.6 .jar](https://github.com/AbsolemJackdaw/PaintingPackMaker/releases/download/1.0.6/PPM.jar)
 - [PPM v1.0.5 .exe](https://github.com/AbsolemJackdaw/PaintingPackMaker/releases/download/1.0.5/PPM.exe)
