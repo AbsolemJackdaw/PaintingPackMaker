@@ -1,6 +1,7 @@
 package jackdaw.paintingpack.paintingpacktool.controller;
 
 import com.sun.tools.jconsole.JConsoleContext;
+import jackdaw.paintingpack.paintingpacktool.export.DataPackExporter;
 import jackdaw.paintingpack.paintingpacktool.export.PackExporter;
 import jackdaw.paintingpack.paintingpacktool.export.PaintingEntry;
 import jackdaw.paintingpack.paintingpacktool.listener.AcceptableNameInputField;
@@ -115,6 +116,7 @@ public class Controller {
         Window stage = source.getScene().getWindow();
         List<PaintingEntry> paintings = new ArrayList<>();
         PackExporter exporter = new PackExporter(this, paintings);
+        DataPackExporter dataPackExporter = new DataPackExporter(this, paintings);
 
         for (CardController card : cardControllers)
             card.getEntryFromCard().ifPresent(paintings::add);
@@ -122,7 +124,11 @@ public class Controller {
         FileChooser.ExtensionFilter extFilter = new FileChooser.ExtensionFilter("ZIP files (*.zip)", "*.zip");
         zipExporter.getExtensionFilters().add(extFilter);
         var exportTo = zipExporter.showSaveDialog(stage);
-        if (exportTo != null) exporter.export(exportTo);
+        if (exportTo != null)
+            if (mcVersion.getValue().contains("1.21"))
+                dataPackExporter.export(exportTo);
+            else
+                exporter.export(exportTo);
     }
 
     @FXML

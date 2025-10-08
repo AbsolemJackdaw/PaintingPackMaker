@@ -19,6 +19,7 @@ public class McVersions {
         MCVERSIONS.add(new Pair<>("1.19.4", 13));
         MCVERSIONS.add(new Pair<>("1.20 – 1.20.1", 15));
         MCVERSIONS.add(new Pair<>("1.20.2 +", 16));
+        MCVERSIONS.add(new Pair<>("1.21 +", 17));
     }
 
     public static ObservableList<String> getVersions() {
@@ -28,7 +29,7 @@ public class McVersions {
     public static int getPackVersion(String name) {
         var first = MCVERSIONS.stream().filter(pair -> pair.getKey().equals(name)).findFirst();
         if (first.isPresent()) return first.get().getValue();
-        return 16; // return latest version as default
+        return MCVERSIONS.get(MCVERSIONS.size() - 1).getValue(); // return latest version as default
     }
 
     public static boolean isAfterOneEighteenTwo(String name) {
