@@ -1,7 +1,7 @@
 # Painting Pack Maker
 
 Friendly reminder that this is free software with active maintenance.  
-If you enjoy my mods and software, please feel free to drop an appreciation gift at [my perosnal kofi](https://ko-fi.com/absolemjackdaw)
+If you enjoy my mods and software, please feel free to drop an appreciation gift at [my personal kofi](https://ko-fi.com/absolemjackdaw)
 
 ### Downloads  
 
