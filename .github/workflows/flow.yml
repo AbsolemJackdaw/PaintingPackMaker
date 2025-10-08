@@ -29,9 +29,19 @@ jobs:
         shell: pwsh
         run: |
           $version = '${{ steps.get_version.outputs.version }}'
+          $lines = Get-Content CHANGELOG.md
+          $start = ($lines | ForEach-Object {$_} | Select-String -Pattern "^## \[$version\]" ).LineNumber
+          if (-not $start) { throw "Version $version not found in CHANGELOG.md" }
+          
+          # find the next line starting with '## ' after $start
+          $rest = $lines[$start..($lines.Count-1)]
+          $end = ($rest | Select-String -Pattern '^## ' | Select-Object -First 1).LineNumber
+          if (-not $end) { $end = $lines.Count + 1 } 
+          
+          $section = $lines[$start..($start + $end - 2)] -join "`n"
+
           echo "body<<EOF" >> $env:GITHUB_OUTPUT
-          git --no-pager grep -A1000 "^## \[$version\]" CHANGELOG.md | 
-            Select-String -NotMatch "^## " | ForEach-Object { $_.Line } >> $env:GITHUB_OUTPUT
+          echo "$section" >> $env:GITHUB_OUTPUT
           echo "EOF" >> $env:GITHUB_OUTPUT
 
       - name: Download JRE
