@@ -55,14 +55,20 @@ launch4j {
     jarTask = project.tasks.shadowJar
     downloadUrl = "https://github.com/AbsolemJackdaw/PaintingPackMaker/releases"
     supportUrl = "https://github.com/AbsolemJackdaw/PaintingPackMaker/issues"
-    version = outfile_version
-    textVersion = outfile_version
+    version = file_version
+    textVersion = file_version
     copyright = "MIT"
     productName = "Painting Pack Maker"
-    windowTitle = "Painting Pack Maker ${outfile_version}"
+    windowTitle = "Painting Pack Maker ${file_version}"
     headerType = "gui"
 }
 
 shadowJar {
     archiveFileName = "PPM.jar"
+}
+//used in github actions.
+task printVersion {
+    doLast {
+        println file_version
+    }
 }
