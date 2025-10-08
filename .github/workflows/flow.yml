@@ -16,6 +16,17 @@ jobs:
         with:
           version: 17
 
+      - name: Get version from gradle.properties 
+        id: get_version
+        run: echo "version=$(./gradlew -q printVersion)" >> $GITHUB_OUTPUT
+
+      - name: Read changelog
+        id: changelog
+        run: |
+          echo "body<<EOF" >> $GITHUB_OUTPUT
+          awk '/^## \[${{ steps.get_version.outputs.version }}\]/,/^## /' CHANGELOG.md | sed '$d' >> $GITHUB_OUTPUT
+          echo "EOF" >> $GITHUB_OUTPUT
+
       - name: Download JRE
         run: |
           powershell /c Invoke-Webrequest https://github.com/AdoptOpenJDK/openjdk17-binaries/releases/download/jdk-2021-05-07-13-31/OpenJDK-jre_x64_windows_hotspot_2021-05-06-23-30.zip -OutFile jre.zip
@@ -32,16 +43,9 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }} # This token is provided by Actions, you do not need to create your own token
         with:
-          tag_name: 1.0.7
-          release_name: 1.0.7
-          body: |
-            Changes
-            - Add progress bar when loading images
-            - Add auto-detector for painting sizes. (it uses the image size to autofill the size fields)
-            - Base window is now 960 pixels wide instead of 720 to better fit the changes in the UI
-            Fixes
-            - Fix error cards being out of whack
-            - Image loading improvement : threads are now used and greatly improve loading times
+          tag_name: ${{ steps.get_version.outputs.version }}
+          release_name: ${{ steps.get_version.outputs.version }}
+          body: ${{ steps.changelog.outputs.body }}
           draft: false
           prerelease: false
 
