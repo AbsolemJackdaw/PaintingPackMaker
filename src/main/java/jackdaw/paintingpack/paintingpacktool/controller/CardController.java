@@ -84,13 +84,14 @@ public class CardController {
         errors = new Text[]{errorOne, errorTwo, errorThree, errorFour};
     }
 
-    public void appendImage(VBox scene, Image img, String imageName, String absoluteImagePath) {
-        imageView.setImage(img);
+    public void appendImage(VBox scene, Image original, Image scaled, String imageName, String absoluteImagePath) {
+        imageView.setImage(scaled);
+
         this.imageName = imageName;
         this.absoluteImagePath = absoluteImagePath;
         this.scene = scene;
-        this.widthPrompt.setText(String.valueOf((int)img.getWidth()/16));
-        this.heightPrompt.setText(String.valueOf((int)img.getHeight()/16));
+        this.widthPrompt.setText(String.valueOf((int) original.getWidth() / 16));
+        this.heightPrompt.setText(String.valueOf((int) original.getHeight() / 16));
         processErrors();
         if (!isErrored) currentName.setText(imageName);
         Paint paint = (scene.getChildren().size()) % 2 == 0 ? isErrored ? REDGRAY : Color.GREY : isErrored ? REDSLATE : Color.SLATEGRAY;

@@ -1,0 +1,84 @@
+.root {
+    -fx-background-color: #efefef;
+}
+
+#uniqueid {
+    -fx-fill: #000000;
+    -fx-stroke: #ffffff;
+    -fx-font-size: 18px;
+    -fx-border-radius: 6;
+}
+
+.text-field {
+    -fx-background-radius: 6;
+    -fx-background-insets: 0;
+    -fx-border-radius: 6;
+    -fx-border-insets: 0;
+    -fx-border-color: #888;
+    -fx-background-color: #f5f5f5;
+    -fx-text-fill: #000000;
+}
+
+.button {
+    -fx-border-width: 2;
+    -fx-border-color: white;
+    -fx-background-color: #606060;
+    -fx-text-fill: white;
+    -fx-border-radius: 6;
+    -fx-background-radius: 8;
+    -fx-background-insets: 0;
+}
+
+.combo-box {
+    -fx-background-color: #f5f5f5;
+    -fx-border-color: #cccccc;
+    -fx-border-radius: 6;
+    -fx-background-radius: 6;
+}
+
+.combo-box:hover {
+    -fx-background-color: #eaeaea;
+}
+
+.combo-box .arrow-button {
+    -fx-background-color: #e0e0e0;
+}
+
+.combo-box .arrow {
+    -fx-background-color: #333333;   /* dark arrow icon */
+}
+
+.combo-box .list-cell {
+    -fx-text-fill: #000000;
+}
+
+/* === Dropdown List === */
+.combo-box-popup .list-view {
+    -fx-background-color: #ffffff;
+    -fx-border-color: #cccccc;
+}
+
+/* === Dropdown List Cells === */
+.combo-box-popup .list-cell {
+    -fx-background-color: transparent;
+    -fx-text-fill: #000000;
+}
+
+/* Hovered list cell */
+.combo-box-popup .list-cell:hover,
+.combo-box-popup .list-cell:filled:hover {
+    -fx-background-color: #e6e6e6;
+    -fx-text-fill: #000000;
+}
+
+/* Selected list cell */
+.combo-box-popup .list-cell:selected {
+    -fx-background-color: #d0d0d0;
+    -fx-text-fill: #000000;
+}
+
+/* Optional: remove default gradient highlight bleed */
+.combo-box-popup .list-cell:hover {
+    -fx-background-insets: 0;
+    -fx-background-radius: 0;
+}

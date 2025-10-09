@@ -73,10 +73,21 @@ public class DataPackExporter {
         JsonObject el = new JsonObject();
         var uniqueName = getModId(String.format(":%s", paintingName(entry)));
         el.addProperty("asset_id", uniqueName);
-        el.addProperty("author", getModId(""));
-        el.addProperty("title", paintingName(entry));
-        el.addProperty("width", entry.size().getKey()/16);
-        el.addProperty("height", entry.size().getValue()/16);
+
+        // --- Author object ---
+        JsonObject authorObj = new JsonObject();
+        authorObj.addProperty("color", "gray");
+        authorObj.addProperty("translate", getCreatorId());
+        el.add("author", authorObj);
+
+        // --- Title object ---
+        JsonObject titleObj = new JsonObject();
+        titleObj.addProperty("color", "yellow");
+        titleObj.addProperty("translate", convertoPaintingName(paintingName(entry)));
+        el.add("title", titleObj);
+
+        el.addProperty("width", entry.size().getKey() / 16);
+        el.addProperty("height", entry.size().getValue() / 16);
         return el;
     }
 
@@ -105,7 +116,32 @@ public class DataPackExporter {
         return (id.isEmpty() ? "paintings" : id) + append;
     }
 
+    public String getCreatorId() {
+        var creator = controller.creatorID.getText();
+        return creator.isBlank() ? "Anonymous" : creator;
+    }
+
     private String paintingName(PaintingEntry entry) {
         return entry.name().substring(0, entry.name().length() - 4);
+    }
+
+    private String convertoPaintingName(String paintingname) {
+        // Replace allowed separators with spaces
+        String formatted = paintingname.replaceAll("[._/\\-]+", " ");
+
+        // Split into words, capitalize first letter
+        String[] words = formatted.trim().split("\\s+");
+        StringBuilder sb = new StringBuilder();
+        for (String word : words) {
+            if (!word.isEmpty()) {
+                sb.append(Character.toUpperCase(word.charAt(0)));
+                if (word.length() > 1) {
+                    sb.append(word.substring(1).toLowerCase());
+                }
+                sb.append(" ");
+            }
+        }
+
+        return sb.toString().trim();
     }
 }

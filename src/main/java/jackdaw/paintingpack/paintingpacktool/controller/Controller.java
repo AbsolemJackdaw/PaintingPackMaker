@@ -1,6 +1,5 @@
 package jackdaw.paintingpack.paintingpacktool.controller;
 
-import com.sun.tools.jconsole.JConsoleContext;
 import jackdaw.paintingpack.paintingpacktool.export.DataPackExporter;
 import jackdaw.paintingpack.paintingpacktool.export.PackExporter;
 import jackdaw.paintingpack.paintingpacktool.export.PaintingEntry;
@@ -17,6 +16,7 @@ import javafx.scene.control.ProgressBar;
 import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.VBox;
 import javafx.stage.FileChooser;
@@ -25,6 +25,7 @@ import javafx.util.Pair;
 
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
@@ -33,6 +34,8 @@ import java.util.Random;
 import java.util.concurrent.atomic.AtomicReference;
 
 public class Controller {
+    private static final double MAX_HEIGHT = 80.0;
+    private static boolean isDarkMode = true;
 
     final FileChooser imageChooser = new FileChooser();
     final FileChooser zipExporter = new FileChooser();
@@ -41,6 +44,8 @@ public class Controller {
 
     @FXML
     public TextField uniqueID;
+    @FXML
+    public TextField creatorID;
 
     @FXML
     public VBox listOfCards;
@@ -51,6 +56,9 @@ public class Controller {
     public ProgressBar progressBar;
 
     @FXML
+    public BorderPane root;
+
+    @FXML
     public void initialize() {
         uniqueID.textProperty().addListener(new AcceptableNameInputField(uniqueID));
         mcVersion.setItems(McVersions.getVersions());
@@ -58,8 +66,22 @@ public class Controller {
             if (e.getTarget() instanceof ComboBox<?> dropdown && dropdown.getValue() instanceof String version) {
                 uniqueID.setDisable(!McVersions.isAfterOneEighteenTwo(version));
                 uniqueID.setText("");
+                creatorID.setDisable(!McVersions.isDatapack(version));
+                creatorID.setText("");
             }
         });
+    }
+
+    @FXML
+    protected void onToggleTheme(ActionEvent event) {
+        isDarkMode = !isDarkMode;
+
+        root.getStylesheets().clear();
+        if (isDarkMode) {
+            root.getStylesheets().add(getClass().getResource("/jackdaw/paintingpack/paintingpacktool/dark.css").toExternalForm());
+        } else {
+            root.getStylesheets().add(getClass().getResource("/jackdaw/paintingpack/paintingpacktool/light.css").toExternalForm());
+        }
     }
 
     @FXML
@@ -81,18 +103,13 @@ public class Controller {
                 Task<Pair<Node, CardController>> task = new Task<>() {
                     @Override
                     protected Pair<Node, CardController> call() throws Exception {
-                        try (FileInputStream fis = new FileInputStream(file)) {
-                            Image img = new Image(fis);
-                            FXMLLoader loader = new FXMLLoader(Controller.class.getResource("/jackdaw/paintingpack/paintingpacktool/card.fxml"));
-                            GridPane cardRoot = loader.load();//load root first
-                            CardController card = loader.getController();//then you can get a controller
-                            card.appendImage(listOfCards, img, file.getName(), file.getAbsolutePath());
-                            Thread.sleep((long) (new Random().nextDouble() * 1000));
-                            return new Pair<>(cardRoot, card);
-                        } catch (IOException e) {
-                            e.printStackTrace();
-                        }
-                        return null;
+                        Pair<Image, Image> images = getImage(file);
+                        FXMLLoader loader = new FXMLLoader(Controller.class.getResource("/jackdaw/paintingpack/paintingpacktool/card.fxml"));
+                        GridPane cardRoot = loader.load();//load root first
+                        CardController card = loader.getController();//then you can get a controller
+                        card.appendImage(listOfCards, images.getKey(), images.getValue(), file.getName(), file.getAbsolutePath());
+                        Thread.sleep((long) (new Random().nextDouble() * 1000));
+                        return new Pair<>(cardRoot, card);
                     }
                 };
                 task.setOnSucceeded(workerStateEvent -> {
@@ -106,6 +123,34 @@ public class Controller {
                 Thread t = new Thread(task);
                 t.start();
             }
+        }
+    }
+
+    private static Pair<Image, Image> getImage(File file) {
+        try (FileInputStream fis = new FileInputStream(file)) {
+            Image original = new Image(fis);
+            double h = original.getHeight();
+            double w = original.getWidth();
+
+            double scale;
+            if (h < MAX_HEIGHT) {
+                scale = Math.floor((MAX_HEIGHT / h) * 2.0) / 2.0;
+                scale = Math.max(scale, 1.0);
+            } else if (h > MAX_HEIGHT) {
+                scale = MAX_HEIGHT / h;
+            } else {
+                scale = 1.0;
+            }
+
+            double newW = w * scale;
+            double newH = h * scale;
+
+            try (FileInputStream fis2 = new FileInputStream(file)) {
+                var scaled = new Image(fis2, newW, newH, false, false);
+                return new Pair<>(original, scaled);
+            }
+        } catch (IOException e) {
+            throw new RuntimeException(e);
         }
     }
 
@@ -125,7 +170,7 @@ public class Controller {
         zipExporter.getExtensionFilters().add(extFilter);
         var exportTo = zipExporter.showSaveDialog(stage);
         if (exportTo != null)
-            if (mcVersion.getValue().contains("1.21"))
+            if (McVersions.isDatapack(mcVersion.getValue()))
                 dataPackExporter.export(exportTo);
             else
                 exporter.export(exportTo);
@@ -145,4 +190,5 @@ public class Controller {
     public static List<CardController> getPaintingCandidates() {
         return cardControllers;
     }
+
 }

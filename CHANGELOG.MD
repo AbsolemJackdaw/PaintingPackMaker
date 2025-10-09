@@ -1,3 +1,9 @@
+## [1.0.9]
+- add dark/light mode.  
+- fix blurry painting images rendered on the screen.  
+- fix datapack output to include colors and decent painting names.  
+- add creator credit field for datapack export
+
 ## [1.0.8]
 - Add 1.21 option.  
 - Add underlying datapack exporter to accommodate 1.21+ changes to minecraft's internal workings with paintings.

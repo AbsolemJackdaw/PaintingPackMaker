@@ -35,4 +35,10 @@ public class McVersions {
     public static boolean isAfterOneEighteenTwo(String name) {
         return (Integer.parseInt(name.substring(2, 4)) > 18 || name.equals(TOPPLE_VERSION));
     }
+
+    public static boolean isDatapack(String name) {
+        var version = name.substring(2, 4);
+        var integerVersion = Integer.parseInt(version);
+        return integerVersion >= 21;
+    }
 }

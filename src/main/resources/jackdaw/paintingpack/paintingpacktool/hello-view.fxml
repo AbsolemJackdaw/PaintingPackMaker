@@ -5,30 +5,47 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
 
-<BorderPane prefHeight="640.0" prefWidth="720.0" xmlns="http://javafx.com/javafx/17.0.2-ea"
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.image.Image?>
+<BorderPane fx:id="root" prefHeight="640.0" prefWidth="720.0" stylesheets="@dark.css"
+            xmlns="http://javafx.com/javafx/17.0.12"
             xmlns:fx="http://javafx.com/fxml/1"
             fx:controller="jackdaw.paintingpack.paintingpacktool.controller.Controller">
     <top>
         <HBox id="topContainer" alignment="CENTER" fillHeight="false" spacing="20.0">
             <children>
-                <Button onAction="#selectImages" stylesheets="@button.css" text="Select Images" HBox.hgrow="NEVER">
+                <Button onAction="#selectImages" text="Select Images" HBox.hgrow="NEVER">
                     <HBox.margin>
                         <Insets/>
                     </HBox.margin>
                 </Button>
+                <Button fx:id="themeToggleButton" onAction="#onToggleTheme"
+                        HBox.hgrow="NEVER">
+                    <graphic>
+                        <ImageView fitHeight="16" fitWidth="16" preserveRatio="true">
+                            <image>
+                                <Image url="@/ld.png"/>
+                            </image>
+                        </ImageView>
+                    </graphic>
+                </Button>
+
                 <ProgressBar fx:id="progressBar" progress="0.0" visible="false"/>
-                <Region HBox.hgrow="ALWAYS"/>
-                <Text fill="#363636" strokeType="OUTSIDE" strokeWidth="0.0" text="Unique Id:" HBox.hgrow="NEVER">
-                    <font>
-                        <Font size="18.0"/>
-                    </font>
-                </Text>
-                <TextField fx:id="uniqueID" disable="true" onMouseClicked="#modIDEntered"
-                           style="-fx-background-color: #8b8b8b; -fx-border-color: #555555; -fx-border-width: 2;"
-                           HBox.hgrow="ALWAYS"/>
+                <!--                <Text id="uniqueid" strokeType="OUTSIDE" strokeWidth="0.0" text="Unique Id:" HBox.hgrow="NEVER">-->
+                <!--                    <font>-->
+                <!--                        <Font size="18.0"/>-->
+                <!--                    </font>-->
+                <!--                </Text>-->
+                <VBox spacing="5.0" HBox.hgrow="ALWAYS">
+                    <TextField fx:id="uniqueID" promptText="Unique ID" disable="true" onMouseClicked="#modIDEntered"
+                               HBox.hgrow="ALWAYS"/>
+                    <TextField fx:id="creatorID" promptText="Creator" disable="true"
+                               HBox.hgrow="ALWAYS"/>
+                </VBox>
+
                 <Region HBox.hgrow="ALWAYS"/>
                 <ComboBox fx:id="mcVersion" promptText="Minecraft Version"/>
-                <Button alignment="CENTER_RIGHT" onAction="#processSelection" stylesheets="@button.css"
+                <Button alignment="CENTER_RIGHT" onAction="#processSelection"
                         text="Finalize Pack" HBox.hgrow="NEVER"/>
             </children>
             <padding>

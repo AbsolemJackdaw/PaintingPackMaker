@@ -18,7 +18,7 @@
         <GridPane.margin>
             <Insets />
         </GridPane.margin>
-        <ImageView fx:id="imageView" fitHeight="80.0" pickOnBounds="true" preserveRatio="true" smooth="false" />
+        <ImageView fx:id="imageView" pickOnBounds="true" preserveRatio="true" smooth="false" />
     </StackPane>
     <StackPane GridPane.columnIndex="1" GridPane.halignment="LEFT" GridPane.hgrow="ALWAYS" GridPane.vgrow="ALWAYS">
         <VBox fx:id="rightPane">
