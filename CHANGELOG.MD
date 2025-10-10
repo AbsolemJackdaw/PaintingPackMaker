@@ -1,3 +1,8 @@
+## [1.0.10]
+- add language files
+- fix compatibility issue with 1.21.1
+- add language keys
+
 ## [1.0.9]
 - add dark/light mode.  
 - fix blurry painting images rendered on the screen.  
