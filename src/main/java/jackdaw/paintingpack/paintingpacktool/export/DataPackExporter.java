@@ -27,23 +27,21 @@ public class DataPackExporter {
     public void export(File zipFile) {
 
         var modId = getModId("");
-        String inZipPath = String.format("assets/%s/textures/painting/", modId);
 
         try (ZipOutputStream zipStream = new ZipOutputStream(new FileOutputStream(zipFile));
              Writer writer = new OutputStreamWriter(zipStream)) {
-            //generate subfolders
-            zipStream.putNextEntry(new ZipEntry(inZipPath));
 
             //copy over images
             for (PaintingEntry entry : paintings) {
                 //create new file with correct name
-                zipStream.putNextEntry(new ZipEntry(inZipPath + entry.name()));
+                zipStream.putNextEntry(new ZipEntry(String.format("assets/%s/textures/painting/", modId) + entry.name()));
                 //copy the original to the correctly named file
                 Files.copy(Path.of(entry.absoluteImagePath()), zipStream);
 
                 //make painting data files
-                zipStream.putNextEntry(new ZipEntry(String.format("data/%s/painting_variant/%s.json", getModId(""), paintingName(entry))));
-                gson.toJson(paintingFiles(entry), writer);
+                zipStream.putNextEntry(new ZipEntry(String.format("data/%s/painting_variant/%s.json", modId, paintingName(entry))));
+                gson.toJson(makePaintingDataFile(entry), writer);
+
                 writer.flush();
             }
 
@@ -54,6 +52,11 @@ public class DataPackExporter {
             tagToFile.add("values", tagEntries());
             //write content to json
             gson.toJson(tagToFile, writer);
+            writer.flush();
+
+            //make tag json file
+            zipStream.putNextEntry(new ZipEntry(String.format("assets/%s/lang/en_us.json", modId)));
+            gson.toJson(makeLanguageFile(), writer);
             writer.flush();
 
             //make pack mcmeta
@@ -69,7 +72,17 @@ public class DataPackExporter {
 
     }
 
-    private JsonObject paintingFiles(PaintingEntry entry) {
+    private JsonObject makeLanguageFile() {
+        //prepare content for json
+        JsonObject langFile = new JsonObject();
+        for (PaintingEntry entry : paintings) {
+            langFile.addProperty(getStranslateStringPainting(entry), convertoPaintingName(paintingName(entry)));
+            langFile.addProperty(getStranslateStringAuthor(entry), getCreatorId());
+        }
+        return langFile;
+    }
+
+    private JsonObject makePaintingDataFile(PaintingEntry entry) {
         JsonObject el = new JsonObject();
         var uniqueName = getModId(String.format(":%s", paintingName(entry)));
         el.addProperty("asset_id", uniqueName);
@@ -77,13 +90,13 @@ public class DataPackExporter {
         // --- Author object ---
         JsonObject authorObj = new JsonObject();
         authorObj.addProperty("color", "gray");
-        authorObj.addProperty("translate", getCreatorId());
+        authorObj.addProperty("translate", getStranslateStringAuthor(entry));
         el.add("author", authorObj);
 
         // --- Title object ---
         JsonObject titleObj = new JsonObject();
         titleObj.addProperty("color", "yellow");
-        titleObj.addProperty("translate", convertoPaintingName(paintingName(entry)));
+        titleObj.addProperty("translate", getStranslateStringPainting(entry));
         el.add("title", titleObj);
 
         el.addProperty("width", entry.size().getKey() / 16);
@@ -143,5 +156,13 @@ public class DataPackExporter {
         }
 
         return sb.toString().trim();
+    }
+
+    private String getStranslateStringPainting(PaintingEntry entry) {
+        return "painting.".concat(getModId("")).concat(".").concat(paintingName(entry)).concat(".title");
+    }
+
+    private String getStranslateStringAuthor(PaintingEntry entry) {
+        return "painting.".concat(getModId("")).concat(".").concat(paintingName(entry)).concat(".author");
     }
 }
