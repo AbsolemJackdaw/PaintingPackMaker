@@ -5,27 +5,7 @@ If you enjoy my mods and software, please feel free to drop an appreciation gift
 
 ### Downloads  
 
-- [PPM v1.0.8 .exe](https://github.com/AbsolemJackdaw/PaintingPackMaker/releases/download/1.0.8/PPM.exe)
-- [PPM v1.0.8 .jar](https://github.com/AbsolemJackdaw/PaintingPackMaker/releases/download/1.0.8/PPM.jar)
-
-<details>
-<summary>older versions</summary>
-
-- [PPM v1.0.7 .exe](https://github.com/AbsolemJackdaw/PaintingPackMaker/releases/download/1.0.7/PPM.exe)
-- [PPM v1.0.7 .jar](https://github.com/AbsolemJackdaw/PaintingPackMaker/releases/download/1.0.7/PPM.jar)
-- [PPM v1.0.6 .exe](https://github.com/AbsolemJackdaw/PaintingPackMaker/releases/download/1.0.6/PPM.exe)
-- [PPM v1.0.6 .jar](https://github.com/AbsolemJackdaw/PaintingPackMaker/releases/download/1.0.6/PPM.jar)
-- [PPM v1.0.5 .exe](https://github.com/AbsolemJackdaw/PaintingPackMaker/releases/download/1.0.5/PPM.exe)
-- [PPM v1.0.5 .jar](https://github.com/AbsolemJackdaw/PaintingPackMaker/releases/download/1.0.5/PPM.jar)
-- [PPM v1.0.4 .exe](http://adfoc.us/78400485750315)
-- [PPM v1.0.4 .jar](http://adfoc.us/78400485757802)
-- [PPM v1.0.3 .exe](http://adfoc.us/78400485741017)
-- [PPM v1.0.3 .jar](http://adfoc.us/78400485750314)
-- [PPM v1.0.2 .exe](http://adfoc.us/78400485727042)
-- [PPM v1.0.2 .jar](http://adfoc.us/78400485740987)
-- [PPM v1.0.0](http://adfoc.us/7840041)
-
-</details>
+- Download PPM by going to the releases page or clicking [here](https://github.com/AbsolemJackdaw/PaintingPackMaker/releases)
 
 ### Requirements
 
